@@ -7,7 +7,7 @@
 <title>Silo — Proposition Network</title>
 
 <style>
-:root{
+:root {
   --bg:#090d18;
   --panel:#111827;
   --panel2:#172033;
@@ -27,258 +27,351 @@
   --related:#8897b5;
 }
 
-*{box-sizing:border-box}
+* {
+  box-sizing:border-box;
+}
 
-html,body{
+html,
+body {
   margin:0;
   width:100%;
   height:100%;
   overflow:hidden;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
   color:var(--text);
   background:var(--bg);
 }
 
-button,input,select,textarea{font:inherit}
+button,
+input,
+select,
+textarea {
+  font:inherit;
+}
 
-button{
+button {
   border:1px solid var(--border);
   background:var(--panel2);
   color:var(--text);
+
   border-radius:8px;
   padding:8px 11px;
+
   cursor:pointer;
 }
 
-button:hover{border-color:#66789d}
+button:hover {
+  border-color:#66789d;
+}
 
-button.primary{
+button.primary {
   background:var(--accent);
   border-color:var(--accent);
 }
 
-button.danger{color:#ffabb5}
+button.danger {
+  color:#ffabb5;
+}
 
-input,select,textarea{
+input,
+select,
+textarea {
   width:100%;
+
   border:1px solid var(--border);
   border-radius:8px;
+
   background:var(--panel3);
   color:var(--text);
+
   padding:8px 9px;
   outline:none;
 }
 
-input:focus,select:focus,textarea:focus{
+input:focus,
+select:focus,
+textarea:focus {
   border-color:var(--accent);
 }
 
-textarea{
+textarea {
   min-height:70px;
   resize:vertical;
 }
 
-input[type="range"]{padding:0}
+input[type="range"] {
+  padding:0;
+}
 
-.app{
+.app {
   display:grid;
-  grid-template-columns:330px 1fr;
+  grid-template-columns:340px 1fr;
   grid-template-rows:66px 1fr;
   height:100vh;
 }
 
-/* HEADER */
 
-header{
-  grid-column:1/-1;
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+  grid-column:1 / -1;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:15px;
+
   padding:0 18px;
+
   background:#0c1220;
   border-bottom:1px solid var(--border);
+
   z-index:20;
 }
 
-.brand{
+.brand {
   display:flex;
   align-items:center;
   gap:11px;
 }
 
-.logo{
+.logo {
   width:36px;
   height:36px;
+
   display:grid;
   place-items:center;
+
   border-radius:10px;
+
   background:var(--accent);
   font-weight:800;
 }
 
-.brand h1{
+.brand h1 {
   margin:0;
   font-size:18px;
 }
 
-.brand small{
+.brand small {
   color:var(--muted);
 }
 
-.header-center{
+.header-center {
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
 }
 
-.header-center label{
+.header-center label {
   margin:0;
   white-space:nowrap;
 }
 
-#profileSelect{
+#profileSelect {
   min-width:180px;
 }
 
-.header-actions{
+.header-actions {
   display:flex;
   gap:7px;
 }
 
-/* SIDEBAR */
 
-aside{
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+aside {
   overflow:auto;
+
   padding:14px;
+
   border-right:1px solid var(--border);
   background:var(--panel);
 }
 
-.section{
+.section {
   border:1px solid var(--border);
   border-radius:13px;
+
   padding:13px;
   margin-bottom:13px;
 }
 
-.section h2{
+.section h2 {
   margin:0 0 10px;
   font-size:14px;
 }
 
-label{
+label {
   display:block;
+
   color:var(--muted);
   font-size:12px;
+
   margin:10px 0 5px;
 }
 
-.hint{
+.hint {
   font-size:11px;
   line-height:1.5;
   color:var(--muted);
 }
 
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.profile-info{
+.profile-info {
   padding:10px;
   margin-bottom:10px;
+
   border-radius:9px;
+
   background:#0b1220;
   border:1px solid var(--border);
 }
 
-.profile-info strong{
+.profile-info strong {
   display:block;
   margin-bottom:3px;
 }
 
-.profile-info span{
+.profile-info span {
   font-size:11px;
   color:var(--muted);
 }
 
-/* GRAPH */
 
-#scrollArea{
+/* =====================================================
+   GRAPH
+===================================================== */
+
+#scrollArea {
   position:relative;
   overflow:auto;
 
   background:
-    radial-gradient(circle at 45% 30%,rgba(124,108,255,.07),transparent 40%),
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    radial-gradient(
+      circle at 45% 30%,
+      rgba(124,108,255,.07),
+      transparent 40%
+    ),
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
 
-  background-size:auto,32px 32px,32px 32px;
+  background-size:
+    auto,
+    32px 32px,
+    32px 32px;
 }
 
-#workspace{
+#workspace {
   position:relative;
-  width:2400px;
-  height:1700px;
+
+  width:2600px;
+  height:1800px;
+
   min-width:100%;
   min-height:100%;
 }
 
-#edges{
+
+/* =====================================================
+   EDGES
+===================================================== */
+
+#edges {
   position:absolute;
   inset:0;
+
   width:100%;
   height:100%;
+
   pointer-events:none;
   overflow:visible;
 }
 
-.edge{
-  stroke-width:2.7;
-  opacity:.88;
+.edge {
+  fill:none;
+  stroke-width:2.8;
+  opacity:.9;
 }
 
-.edge.supports{stroke:var(--support)}
-.edge.implies{stroke:var(--implies)}
-.edge.contradicts{
+.edge.supports {
+  stroke:var(--support);
+}
+
+.edge.implies {
+  stroke:var(--implies);
+}
+
+.edge.contradicts {
   stroke:var(--contradicts);
   stroke-dasharray:9 6;
 }
-.edge.undermines{
+
+.edge.undermines {
   stroke:var(--undermines);
   stroke-dasharray:6 5;
 }
-.edge.depends{stroke:var(--depends)}
-.edge.evidenceFor{stroke:var(--evidence)}
-.edge.evidenceAgainst{
+
+.edge.depends {
+  stroke:var(--depends);
+}
+
+.edge.evidenceFor {
+  stroke:var(--evidence);
+}
+
+.edge.evidenceAgainst {
   stroke:var(--against);
   stroke-dasharray:8 5;
 }
-.edge.related{
+
+.edge.related {
   stroke:var(--related);
   stroke-dasharray:3 6;
 }
 
-#edgeLabels{
+#edgeLabels {
   position:absolute;
   inset:0;
+
   pointer-events:none;
 }
 
-.edge-label{
+.edge-label {
   position:absolute;
+
   transform:translate(-50%,-50%);
+
   pointer-events:auto;
 
-  max-width:210px;
+  max-width:230px;
+
   border:1px solid var(--border);
   border-radius:999px;
+
   background:rgba(8,13,25,.96);
   color:var(--text);
 
   padding:5px 8px;
+
   font-size:10px;
 
   overflow:hidden;
@@ -286,11 +379,15 @@ label{
   white-space:nowrap;
 }
 
-/* NODES */
 
-.node{
+/* =====================================================
+   NODES
+===================================================== */
+
+.node {
   position:absolute;
-  width:235px;
+
+  width:240px;
   min-height:112px;
 
   padding:13px;
@@ -298,148 +395,208 @@ label{
   border:1px solid #485b82;
   border-radius:15px;
 
-  background:linear-gradient(180deg,#19233a,#121a2b);
-  box-shadow:0 15px 40px rgba(0,0,0,.28);
+  background:
+    linear-gradient(
+      180deg,
+      #19233a,
+      #121a2b
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.28);
 
   cursor:grab;
   user-select:none;
+
   z-index:5;
 }
 
-.node:hover{
+.node:hover {
   border-color:var(--accent);
 }
 
-.node:active{cursor:grabbing}
+.node:active {
+  cursor:grabbing;
+}
 
-.node-title{
+.node-title {
   font-size:14px;
   line-height:1.35;
   font-weight:700;
+
   padding-right:48px;
 }
 
-.node-description{
+.node-description {
   font-size:11px;
   color:var(--muted);
+
   margin-top:8px;
+
   line-height:1.45;
 }
 
-.confidence{
+.confidence {
   position:absolute;
+
   right:9px;
   top:9px;
 
   padding:3px 7px;
+
   border:1px solid var(--border);
   border-radius:999px;
 
   background:#0b1220;
+
   font-size:10px;
 }
 
-.confidence-bar{
+.confidence-bar {
   height:5px;
+
   background:#0b1220;
+
   border-radius:4px;
+
   overflow:hidden;
+
   margin-top:10px;
 }
 
-.confidence-fill{
+.confidence-fill {
   height:100%;
   background:var(--accent);
 }
 
-.node-buttons{
+.node-buttons {
   display:flex;
   gap:6px;
+
   margin-top:9px;
+
   opacity:0;
 }
 
-.node:hover .node-buttons{opacity:1}
+.node:hover .node-buttons {
+  opacity:1;
+}
 
-.node-buttons button{
+.node-buttons button {
   padding:4px 7px;
   font-size:10px;
 }
 
-/* TOOLTIP */
 
-#tooltip{
+/* =====================================================
+   TOOLTIP
+===================================================== */
+
+#tooltip {
   display:none;
+
   position:fixed;
-  width:min(390px,calc(100vw - 30px));
+
+  width:min(
+    390px,
+    calc(100vw - 30px)
+  );
+
   padding:13px;
 
   border:1px solid #53698f;
   border-radius:12px;
 
   background:rgba(7,11,22,.98);
-  box-shadow:0 20px 55px rgba(0,0,0,.55);
+
+  box-shadow:
+    0 20px 55px rgba(0,0,0,.55);
 
   z-index:1000;
+
   pointer-events:none;
 }
 
-#tooltipTitle{
+#tooltipTitle {
   display:block;
   margin-bottom:7px;
 }
 
-#tooltipDescription{
+#tooltipDescription {
   margin:0;
+
   font-size:12px;
   line-height:1.55;
+
   color:#cad5ec;
+
   white-space:pre-wrap;
 }
 
-#tooltipMeta{
+#tooltipMeta {
   margin-top:9px;
+
   color:var(--muted);
+
   font-size:11px;
 }
 
-/* DIALOGS */
 
-dialog{
-  width:min(520px,calc(100vw - 30px));
+/* =====================================================
+   DIALOGS
+===================================================== */
+
+dialog {
+  width:min(
+    520px,
+    calc(100vw - 30px)
+  );
+
   border:1px solid var(--border);
   border-radius:15px;
+
   background:var(--panel);
   color:var(--text);
+
   padding:0;
 }
 
-dialog::backdrop{
+dialog::backdrop {
   background:rgba(0,0,0,.7);
 }
 
-.dialog-content{
+.dialog-content {
   padding:18px;
 }
 
-.dialog-content h2{
+.dialog-content h2 {
   margin:0 0 10px;
 }
 
-.dialog-actions{
+.dialog-actions {
   display:flex;
   gap:8px;
+
   margin-top:16px;
 }
 
-.grow{flex:1}
+.grow {
+  flex:1;
+}
 
-#status{
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+#status {
   position:fixed;
+
   right:17px;
   bottom:17px;
 
   padding:7px 10px;
+
   border:1px solid var(--border);
   border-radius:8px;
 
@@ -447,52 +604,74 @@ dialog::backdrop{
   color:var(--muted);
 
   font-size:11px;
+
   z-index:30;
 }
 
-@media(max-width:900px){
 
-  .app{
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:900px) {
+
+  .app {
     grid-template-columns:1fr;
-    grid-template-rows:auto 330px 1fr;
+    grid-template-rows:auto 350px 1fr;
   }
 
-  header{
+  header {
     grid-row:1;
+
     flex-wrap:wrap;
+
     padding:10px 12px;
   }
 
-  aside{
+  aside {
     grid-row:2;
+
     border-right:0;
     border-bottom:1px solid var(--border);
   }
 
-  #scrollArea{
+  #scrollArea {
     grid-row:3;
   }
 
-  .header-actions{
+  .header-actions {
     display:none;
   }
 }
 </style>
 </head>
 
+
 <body>
 
 <div class="app">
 
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header>
 
   <div class="brand">
-    <div class="logo">S</div>
+
+    <div class="logo">
+      S
+    </div>
+
     <div>
       <h1>Silo</h1>
-      <small>Proposition network</small>
+      <small>
+        Proposition network
+      </small>
     </div>
+
   </div>
+
 
   <div class="header-center">
 
@@ -500,7 +679,8 @@ dialog::backdrop{
       View as
     </label>
 
-    <select id="profileSelect"></select>
+    <select id="profileSelect">
+    </select>
 
     <button id="addProfileButton">
       + Profile
@@ -512,6 +692,7 @@ dialog::backdrop{
 
   </div>
 
+
   <div class="header-actions">
 
     <button id="exportButton">
@@ -522,8 +703,11 @@ dialog::backdrop{
       Import
     </button>
 
-    <button id="clearButton" class="danger">
-      Clear graph
+    <button
+      id="clearButton"
+      class="danger"
+    >
+      Reset
     </button>
 
   </div>
@@ -531,30 +715,48 @@ dialog::backdrop{
 </header>
 
 
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
 <aside>
+
 
 <section class="section">
 
-  <h2>Active profile</h2>
+  <h2>
+    Active profile
+  </h2>
 
   <div class="profile-info">
-    <strong id="activeProfileName"></strong>
+
+    <strong id="activeProfileName">
+    </strong>
+
     <span>
-      Every proposition shows this profile's confidence.
+      Proposition percentages below
+      represent this profile's beliefs.
     </span>
+
   </div>
 
   <div class="hint">
-    Changing profiles does not change the propositions themselves.
-    It only changes how confident that person or worldview is in each proposition.
+    The propositions and logical
+    relationships remain the same.
+    Each profile has its own confidence
+    from 0–100% in each proposition.
   </div>
 
 </section>
 
 
+
 <section class="section">
 
-<h2>Create proposition</h2>
+<h2>
+  Create proposition
+</h2>
+
 
 <label for="nodeTitle">
   Proposition
@@ -563,7 +765,8 @@ dialog::backdrop{
 <input
   id="nodeTitle"
   placeholder="Holy Scripture is God-breathed"
-/>
+>
+
 
 <label for="nodeDescription">
   Full description
@@ -574,10 +777,19 @@ dialog::backdrop{
   placeholder="Explain exactly what this proposition means..."
 ></textarea>
 
+
 <label for="nodeConfidence">
-  <span id="newNodeProfileLabel">Profile</span>
+
+  <span id="newNodeProfileLabel">
+    Profile
+  </span>
+
   confidence:
-  <span id="nodeConfidenceValue">50</span>%
+
+  <span id="nodeConfidenceValue">
+    50
+  </span>%
+
 </label>
 
 <input
@@ -586,43 +798,56 @@ dialog::backdrop{
   min="0"
   max="100"
   value="50"
-/>
+>
+
 
 <button
   id="addNodeButton"
   class="primary"
-  style="width:100%;margin-top:12px;"
+  style="
+    width:100%;
+    margin-top:12px;
+  "
 >
   Create proposition
 </button>
 
+
 <p class="hint">
   Hover for the full description.
-  Drag to move.
-  Double-click to edit confidence and proposition details.
+  Drag a proposition to move it.
+  Double-click it to edit it.
 </p>
 
 </section>
 
 
+
 <section class="section">
 
-<h2>Create connection</h2>
+<h2>
+  Create connection
+</h2>
+
 
 <label for="edgeFrom">
-  From proposition
+  Proposition A
 </label>
 
-<select id="edgeFrom"></select>
+<select id="edgeFrom">
+</select>
+
 
 <label for="edgeTo">
-  To proposition
+  Proposition B
 </label>
 
-<select id="edgeTo"></select>
+<select id="edgeTo">
+</select>
+
 
 <label for="edgeType">
-  Relationship
+  Logical relationship
 </label>
 
 <select id="edgeType">
@@ -661,9 +886,36 @@ dialog::backdrop{
 
 </select>
 
+
+<label for="edgeDirection">
+  Logical direction
+</label>
+
+<select id="edgeDirection">
+
+  <option value="forward">
+    A → B
+  </option>
+
+  <option value="backward">
+    A ← B
+  </option>
+
+  <option value="both">
+    A ↔ B
+  </option>
+
+</select>
+
+
 <label for="edgeConfidence">
-  Confidence in this relationship:
-  <span id="edgeConfidenceValue">70</span>%
+
+  Confidence in relationship:
+
+  <span id="edgeConfidenceValue">
+    70
+  </span>%
+
 </label>
 
 <input
@@ -672,7 +924,8 @@ dialog::backdrop{
   min="0"
   max="100"
   value="70"
-/>
+>
+
 
 <label for="edgeDescription">
   Relationship explanation
@@ -680,13 +933,17 @@ dialog::backdrop{
 
 <textarea
   id="edgeDescription"
-  placeholder="Example: If Paul is a reliable witness, this raises the probability that the resurrection appearances occurred..."
+  placeholder="Explain why proposition A supports, implies, contradicts, or otherwise relates to proposition B..."
 ></textarea>
+
 
 <button
   id="addEdgeButton"
   class="primary"
-  style="width:100%;margin-top:12px;"
+  style="
+    width:100%;
+    margin-top:12px;
+  "
 >
   Create connection
 </button>
@@ -696,15 +953,49 @@ dialog::backdrop{
 </aside>
 
 
+<!-- =====================================================
+     GRAPH
+===================================================== -->
+
 <main id="scrollArea">
 
 <div id="workspace">
 
-  <svg id="edges"></svg>
 
-  <div id="edgeLabels"></div>
+<svg id="edges">
 
-  <div id="nodes"></div>
+  <defs>
+
+    <marker
+      id="arrowHead"
+      markerWidth="9"
+      markerHeight="9"
+      refX="8"
+      refY="4"
+      orient="auto-start-reverse"
+      markerUnits="strokeWidth"
+    >
+
+      <path
+        d="M0,0 L0,8 L9,4 z"
+        fill="context-stroke"
+      >
+      </path>
+
+    </marker>
+
+  </defs>
+
+</svg>
+
+
+<div id="edgeLabels">
+</div>
+
+
+<div id="nodes">
+</div>
+
 
 </div>
 
@@ -713,27 +1004,47 @@ dialog::backdrop{
 </div>
 
 
-<div id="status"></div>
 
+<!-- =====================================================
+     STATUS
+===================================================== -->
+
+<div id="status">
+</div>
+
+
+
+<!-- =====================================================
+     TOOLTIP
+===================================================== -->
 
 <div id="tooltip">
 
-<strong id="tooltipTitle"></strong>
+<strong id="tooltipTitle">
+</strong>
 
-<p id="tooltipDescription"></p>
+<p id="tooltipDescription">
+</p>
 
-<div id="tooltipMeta"></div>
+<div id="tooltipMeta">
+</div>
 
 </div>
 
 
-<!-- EDIT PROPOSITION -->
+
+<!-- =====================================================
+     EDIT PROPOSITION DIALOG
+===================================================== -->
 
 <dialog id="nodeDialog">
 
 <div class="dialog-content">
 
-<h2>Edit proposition</h2>
+<h2>
+  Edit proposition
+</h2>
+
 
 <label for="editNodeTitle">
   Proposition
@@ -741,24 +1052,35 @@ dialog::backdrop{
 
 <input id="editNodeTitle">
 
+
 <label for="editNodeDescription">
   Full description
 </label>
 
-<textarea id="editNodeDescription"></textarea>
+<textarea id="editNodeDescription">
+</textarea>
+
 
 <label for="editNodeConfidence">
-  <span id="editNodeProfileName"></span>
+
+  <span id="editNodeProfileName">
+  </span>
+
   confidence:
-  <span id="editNodeConfidenceValue"></span>%
+
+  <span id="editNodeConfidenceValue">
+  </span>%
+
 </label>
+
 
 <input
   id="editNodeConfidence"
   type="range"
   min="0"
   max="100"
-/>
+>
+
 
 <div class="dialog-actions">
 
@@ -769,7 +1091,8 @@ dialog::backdrop{
   Delete
 </button>
 
-<div class="grow"></div>
+<div class="grow">
+</div>
 
 <button id="cancelNodeButton">
   Cancel
@@ -789,15 +1112,26 @@ dialog::backdrop{
 </dialog>
 
 
-<!-- EDIT CONNECTION -->
+
+<!-- =====================================================
+     EDIT CONNECTION DIALOG
+===================================================== -->
 
 <dialog id="edgeDialog">
 
 <div class="dialog-content">
 
-<h2>Edit connection</h2>
+<h2>
+  Edit connection
+</h2>
 
-<div id="edgePairText" class="hint"></div>
+
+<div
+  id="edgePairText"
+  class="hint"
+>
+</div>
+
 
 <label for="editEdgeType">
   Relationship
@@ -805,34 +1139,87 @@ dialog::backdrop{
 
 <select id="editEdgeType">
 
-  <option value="supports">Supports</option>
-  <option value="implies">Implies</option>
-  <option value="contradicts">Contradicts</option>
-  <option value="undermines">Undermines</option>
-  <option value="depends">Depends on</option>
-  <option value="evidenceFor">Evidence for</option>
-  <option value="evidenceAgainst">Evidence against</option>
-  <option value="related">Related to</option>
+  <option value="supports">
+    Supports
+  </option>
+
+  <option value="implies">
+    Implies
+  </option>
+
+  <option value="contradicts">
+    Contradicts
+  </option>
+
+  <option value="undermines">
+    Undermines
+  </option>
+
+  <option value="depends">
+    Depends on
+  </option>
+
+  <option value="evidenceFor">
+    Evidence for
+  </option>
+
+  <option value="evidenceAgainst">
+    Evidence against
+  </option>
+
+  <option value="related">
+    Related to
+  </option>
 
 </select>
 
-<label for="editEdgeConfidence">
-  Confidence:
-  <span id="editEdgeConfidenceValue"></span>%
+
+<label for="editEdgeDirection">
+  Logical direction
 </label>
+
+<select id="editEdgeDirection">
+
+  <option value="forward">
+    A → B
+  </option>
+
+  <option value="backward">
+    A ← B
+  </option>
+
+  <option value="both">
+    A ↔ B
+  </option>
+
+</select>
+
+
+<label for="editEdgeConfidence">
+
+  Confidence:
+
+  <span id="editEdgeConfidenceValue">
+  </span>%
+
+</label>
+
 
 <input
   id="editEdgeConfidence"
   type="range"
   min="0"
   max="100"
-/>
+>
+
 
 <label for="editEdgeDescription">
   Relationship explanation
 </label>
 
-<textarea id="editEdgeDescription"></textarea>
+<textarea id="editEdgeDescription">
+</textarea>
+
 
 <div class="dialog-actions">
 
@@ -843,7 +1230,8 @@ dialog::backdrop{
   Delete
 </button>
 
-<div class="grow"></div>
+<div class="grow">
+</div>
 
 <button id="cancelEdgeButton">
   Cancel
@@ -863,7 +1251,10 @@ dialog::backdrop{
 </dialog>
 
 
-<!-- PROFILE DIALOG -->
+
+<!-- =====================================================
+     PROFILE DIALOG
+===================================================== -->
 
 <dialog id="profileDialog">
 
@@ -873,14 +1264,16 @@ dialog::backdrop{
   Profile
 </h2>
 
+
 <label for="profileNameInput">
   Profile name
 </label>
 
 <input
   id="profileNameInput"
-  placeholder="Orthodox, Muslim, Dad, etc."
+  placeholder="Orthodox, Muslim, Dad, Friend..."
 >
+
 
 <div class="dialog-actions">
 
@@ -891,7 +1284,8 @@ dialog::backdrop{
   Delete
 </button>
 
-<div class="grow"></div>
+<div class="grow">
+</div>
 
 <button id="cancelProfileButton">
   Cancel
@@ -911,6 +1305,7 @@ dialog::backdrop{
 </dialog>
 
 
+
 <input
   id="importFile"
   type="file"
@@ -919,47 +1314,100 @@ dialog::backdrop{
 >
 
 
+
 <script>
 
-const STORAGE_KEY = "silo-v2";
+/* =====================================================
+   GENERAL
+===================================================== */
 
-function id(){
+const STORAGE_KEY =
+  "silo-v3-arrows";
+
+
+function makeId() {
+
   if(
     window.crypto &&
     crypto.randomUUID
-  ){
+  ) {
+
     return crypto.randomUUID();
+
   }
 
-  return Date.now().toString(36) +
-    Math.random().toString(36).slice(2);
+  return (
+    Date.now().toString(36) +
+    Math.random().toString(36).slice(2)
+  );
+
 }
 
 
 const relationshipLabels = {
-  supports:"Supports",
-  implies:"Implies",
-  contradicts:"Contradicts",
-  undermines:"Undermines",
-  depends:"Depends on",
-  evidenceFor:"Evidence for",
-  evidenceAgainst:"Evidence against",
-  related:"Related to"
+
+  supports:
+    "Supports",
+
+  implies:
+    "Implies",
+
+  contradicts:
+    "Contradicts",
+
+  undermines:
+    "Undermines",
+
+  depends:
+    "Depends on",
+
+  evidenceFor:
+    "Evidence for",
+
+  evidenceAgainst:
+    "Evidence against",
+
+  related:
+    "Related to"
+
 };
 
 
-function defaultState(){
 
-  const protestant = id();
-  const catholic = id();
-  const atheist = id();
-  const me = id();
-  const friend = id();
+/* =====================================================
+   DEFAULT GRAPH
+===================================================== */
 
-  const scripture = id();
-  const resurrection = id();
-  const christianity = id();
-  const solaScriptura = id();
+function defaultState() {
+
+  const protestant =
+    makeId();
+
+  const catholic =
+    makeId();
+
+  const atheist =
+    makeId();
+
+  const me =
+    makeId();
+
+  const friend =
+    makeId();
+
+
+  const scripture =
+    makeId();
+
+  const resurrection =
+    makeId();
+
+  const christianity =
+    makeId();
+
+  const solaScriptura =
+    makeId();
+
 
   return {
 
@@ -992,11 +1440,15 @@ function defaultState(){
 
     ],
 
-    activeProfileId:me,
+
+    activeProfileId:
+      me,
+
 
     nodes:[
 
       {
+
         id:scripture,
 
         title:
@@ -1009,15 +1461,24 @@ function defaultState(){
         y:170,
 
         confidenceByProfile:{
+
           [protestant]:100,
+
           [catholic]:100,
+
           [atheist]:2,
+
           [me]:80,
+
           [friend]:50
+
         }
+
       },
 
+
       {
+
         id:resurrection,
 
         title:
@@ -1026,19 +1487,28 @@ function defaultState(){
         description:
           "Jesus of Nazareth physically rose from death after his crucifixion.",
 
-        x:590,
-        y:370,
+        x:610,
+        y:390,
 
         confidenceByProfile:{
+
           [protestant]:100,
+
           [catholic]:100,
+
           [atheist]:3,
+
           [me]:75,
+
           [friend]:40
+
         }
+
       },
 
+
       {
+
         id:christianity,
 
         title:
@@ -1047,19 +1517,28 @@ function defaultState(){
         description:
           "The central truth claims of Christianity accurately describe reality.",
 
-        x:980,
+        x:1030,
         y:170,
 
         confidenceByProfile:{
+
           [protestant]:100,
+
           [catholic]:100,
+
           [atheist]:1,
+
           [me]:70,
+
           [friend]:35
+
         }
+
       },
 
+
       {
+
         id:solaScriptura,
 
         title:
@@ -1068,40 +1547,77 @@ function defaultState(){
         description:
           "Scripture is the only infallible rule of faith for the Church.",
 
-        x:560,
-        y:680,
+        x:600,
+        y:720,
 
         confidenceByProfile:{
+
           [protestant]:95,
+
           [catholic]:2,
+
           [atheist]:1,
+
           [me]:55,
+
           [friend]:20
+
         }
+
       }
 
     ],
 
+
     edges:[
 
       {
-        id:id(),
-        from:resurrection,
-        to:christianity,
-        type:"supports",
-        confidence:95,
+
+        id:makeId(),
+
+        from:
+          resurrection,
+
+        to:
+          christianity,
+
+        type:
+          "supports",
+
+        direction:
+          "forward",
+
+        confidence:
+          95,
+
         description:
           "If Jesus truly rose from the dead, this provides very strong evidence for central Christian claims."
+
       },
 
+
       {
-        id:id(),
-        from:scripture,
-        to:solaScriptura,
-        type:"supports",
-        confidence:60,
+
+        id:makeId(),
+
+        from:
+          scripture,
+
+        to:
+          solaScriptura,
+
+        type:
+          "supports",
+
+        direction:
+          "forward",
+
+        confidence:
+          60,
+
         description:
           "Divine inspiration of Scripture supports a high view of biblical authority, although it does not by itself establish that Scripture is the only infallible authority."
+
       }
 
     ]
@@ -1111,31 +1627,135 @@ function defaultState(){
 }
 
 
-function load(){
 
-  try{
+/* =====================================================
+   LOAD
+===================================================== */
+
+function loadState() {
+
+  try {
 
     const raw =
       localStorage.getItem(
         STORAGE_KEY
       );
 
-    if(raw){
-      return JSON.parse(raw);
+
+    if(raw) {
+
+      const parsed =
+        JSON.parse(raw);
+
+
+      /*
+        Compatibility:
+        old edges without direction
+        become forward arrows.
+      */
+
+      if(
+        Array.isArray(
+          parsed.edges
+        )
+      ) {
+
+        parsed.edges.forEach(
+          edge => {
+
+            if(
+              !edge.direction
+            ) {
+
+              edge.direction =
+                "forward";
+
+            }
+
+          }
+        );
+
+      }
+
+
+      return parsed;
+
     }
 
-  }catch(error){
-    console.error(error);
+  } catch(error) {
+
+    console.error(
+      "Could not load graph.",
+      error
+    );
+
   }
 
+
   return defaultState();
+
 }
 
 
-const state = load();
+const state =
+  loadState();
 
 
-function save(){
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const nodesLayer =
+  document.getElementById(
+    "nodes"
+  );
+
+
+const edgeSvg =
+  document.getElementById(
+    "edges"
+  );
+
+
+const edgeLabels =
+  document.getElementById(
+    "edgeLabels"
+  );
+
+
+const tooltip =
+  document.getElementById(
+    "tooltip"
+  );
+
+
+let dragging =
+  null;
+
+
+let editingNodeId =
+  null;
+
+
+let editingEdgeId =
+  null;
+
+
+let profileMode =
+  null;
+
+
+let editingProfileId =
+  null;
+
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function save() {
 
   localStorage.setItem(
     STORAGE_KEY,
@@ -1143,45 +1763,71 @@ function save(){
   );
 
   updateStatus();
-}
-
-
-function activeProfile(){
-
-  return state.profiles.find(
-    p =>
-      p.id ===
-      state.activeProfileId
-  ) || state.profiles[0];
 
 }
 
 
-function nodeById(nodeId){
 
-  return state.nodes.find(
-    n =>
-      n.id === nodeId
+/* =====================================================
+   BASIC HELPERS
+===================================================== */
+
+function activeProfile() {
+
+  return (
+
+    state.profiles.find(
+      profile =>
+        profile.id ===
+        state.activeProfileId
+    )
+
+    ||
+
+    state.profiles[0]
+
   );
 
 }
 
 
-function confidenceFor(node){
+function nodeById(
+  nodeId
+) {
+
+  return state.nodes.find(
+    node =>
+      node.id === nodeId
+  );
+
+}
+
+
+function confidenceFor(
+  node
+) {
 
   const profile =
     activeProfile();
 
-  if(!profile){
+
+  if(!profile) {
+
     return 50;
+
   }
+
 
   const value =
     node.confidenceByProfile[
       profile.id
     ];
 
-  return typeof value === "number"
+
+  return (
+    typeof value ===
+    "number"
+  )
     ? value
     : 50;
 
@@ -1190,60 +1836,44 @@ function confidenceFor(node){
 
 function shorten(
   text,
-  max=90
-){
+  max = 90
+) {
 
-  if(!text){
+  if(!text) {
+
     return "No description.";
+
   }
 
-  return text.length > max
-    ? text.slice(0,max) + "…"
+
+  return (
+    text.length > max
+  )
+    ? text.slice(
+        0,
+        max
+      ) + "…"
     : text;
+
 }
 
 
-const nodesLayer =
-  document.getElementById(
-    "nodes"
-  );
 
-const edgeSvg =
-  document.getElementById(
-    "edges"
-  );
-
-const edgeLabels =
-  document.getElementById(
-    "edgeLabels"
-  );
-
-const tooltip =
-  document.getElementById(
-    "tooltip"
-  );
-
-
-let dragging = null;
-let editingNodeId = null;
-let editingEdgeId = null;
-
-let profileMode = null;
-let editingProfileId = null;
-
-
-/* -----------------------------
+/* =====================================================
    PROFILES
------------------------------ */
+===================================================== */
 
-function renderProfiles(){
+function renderProfiles() {
 
   const select =
     document.getElementById(
       "profileSelect"
     );
 
-  select.innerHTML = "";
+
+  select.innerHTML =
+    "";
+
 
   state.profiles.forEach(
     profile => {
@@ -1253,16 +1883,22 @@ function renderProfiles(){
           "option"
         );
 
+
       option.value =
         profile.id;
+
 
       option.textContent =
         profile.name;
 
-      select.appendChild(option);
+
+      select.appendChild(
+        option
+      );
 
     }
   );
+
 
   select.value =
     state.activeProfileId;
@@ -1271,58 +1907,70 @@ function renderProfiles(){
   const profile =
     activeProfile();
 
+
   document.getElementById(
     "activeProfileName"
   ).textContent =
-    profile ?
-      profile.name :
-      "No profile";
+    profile
+      ? profile.name
+      : "No profile";
 
 
   document.getElementById(
     "newNodeProfileLabel"
   ).textContent =
-    profile ?
-      profile.name :
-      "Profile";
+    profile
+      ? profile.name
+      : "Profile";
 
 }
 
 
-function switchProfile(){
+function switchProfile() {
 
   state.activeProfileId =
     document.getElementById(
       "profileSelect"
     ).value;
 
+
   save();
 
   renderProfiles();
+
   renderNodes();
 
 }
 
 
-function newProfile(){
+function newProfile() {
 
-  profileMode = "new";
-  editingProfileId = null;
+  profileMode =
+    "new";
+
+
+  editingProfileId =
+    null;
+
 
   document.getElementById(
     "profileDialogTitle"
   ).textContent =
     "Create profile";
 
+
   document.getElementById(
     "profileNameInput"
-  ).value = "";
+  ).value =
+    "";
+
 
   document.getElementById(
     "deleteProfileButton"
   ).style.display =
     "none";
 
+
   document.getElementById(
     "profileDialog"
   ).showModal();
@@ -1330,33 +1978,44 @@ function newProfile(){
 }
 
 
-function editProfile(){
+function editProfile() {
 
   const profile =
     activeProfile();
 
-  if(!profile){
+
+  if(!profile) {
+
     return;
+
   }
 
-  profileMode = "edit";
+
+  profileMode =
+    "edit";
+
+
   editingProfileId =
     profile.id;
+
 
   document.getElementById(
     "profileDialogTitle"
   ).textContent =
     "Edit profile";
 
+
   document.getElementById(
     "profileNameInput"
   ).value =
     profile.name;
 
+
   document.getElementById(
     "deleteProfileButton"
   ).style.display =
     "";
+
 
   document.getElementById(
     "profileDialog"
@@ -1365,29 +2024,49 @@ function editProfile(){
 }
 
 
-function saveProfile(){
+function saveProfile() {
 
   const name =
     document.getElementById(
       "profileNameInput"
     ).value.trim();
 
-  if(!name){
-    alert("Enter a profile name.");
+
+  if(!name) {
+
+    alert(
+      "Enter a profile name."
+    );
+
     return;
+
   }
 
 
-  if(profileMode === "new"){
+  if(
+    profileMode ===
+    "new"
+  ) {
 
     const newProfileId =
-      id();
+      makeId();
+
 
     state.profiles.push({
-      id:newProfileId,
-      name:name
+
+      id:
+        newProfileId,
+
+      name:
+        name
+
     });
 
+
+    /*
+      Every existing proposition
+      starts at 50% for a new profile.
+    */
 
     state.nodes.forEach(
       node => {
@@ -1403,17 +2082,21 @@ function saveProfile(){
     state.activeProfileId =
       newProfileId;
 
-  }else{
+  } else {
 
     const profile =
       state.profiles.find(
-        p =>
-          p.id ===
+        item =>
+          item.id ===
           editingProfileId
       );
 
-    if(profile){
-      profile.name = name;
+
+    if(profile) {
+
+      profile.name =
+        name;
+
     }
 
   }
@@ -1423,32 +2106,37 @@ function saveProfile(){
     "profileDialog"
   ).close();
 
+
   save();
+
   render();
 
 }
 
 
-function deleteProfile(){
+function deleteProfile() {
 
   if(
     state.profiles.length <= 1
-  ){
+  ) {
 
     alert(
       "You need at least one profile."
     );
 
     return;
+
   }
 
 
   if(
     !confirm(
-      "Delete this profile and all of its confidence ratings?"
+      "Delete this profile and all of its proposition confidence ratings?"
     )
-  ){
+  ) {
+
     return;
+
   }
 
 
@@ -1458,17 +2146,20 @@ function deleteProfile(){
 
   state.profiles =
     state.profiles.filter(
-      p =>
-        p.id !== deleting
+      profile =>
+        profile.id !==
+        deleting
     );
 
 
   state.nodes.forEach(
     node => {
 
-      delete node.confidenceByProfile[
-        deleting
-      ];
+      delete (
+        node.confidenceByProfile[
+          deleting
+        ]
+      );
 
     }
   );
@@ -1484,18 +2175,22 @@ function deleteProfile(){
 
 
   save();
+
   render();
 
 }
 
 
-/* -----------------------------
-   NODES
------------------------------ */
 
-function renderNodes(){
+/* =====================================================
+   RENDER NODES
+===================================================== */
 
-  nodesLayer.innerHTML = "";
+function renderNodes() {
+
+  nodesLayer.innerHTML =
+    "";
+
 
   state.nodes.forEach(
     node => {
@@ -1505,21 +2200,27 @@ function renderNodes(){
           "article"
         );
 
+
       element.className =
         "node";
+
 
       element.dataset.id =
         node.id;
 
+
       element.style.left =
         node.x + "px";
+
 
       element.style.top =
         node.y + "px";
 
 
       const confidence =
-        confidenceFor(node);
+        confidenceFor(
+          node
+        );
 
 
       const badge =
@@ -1527,8 +2228,10 @@ function renderNodes(){
           "div"
         );
 
+
       badge.className =
         "confidence";
+
 
       badge.textContent =
         confidence + "%";
@@ -1539,8 +2242,10 @@ function renderNodes(){
           "div"
         );
 
+
       title.className =
         "node-title";
+
 
       title.textContent =
         node.title;
@@ -1551,8 +2256,10 @@ function renderNodes(){
           "div"
         );
 
+
       description.className =
         "node-description";
+
 
       description.textContent =
         shorten(
@@ -1565,6 +2272,7 @@ function renderNodes(){
           "div"
         );
 
+
       bar.className =
         "confidence-bar";
 
@@ -1574,19 +2282,25 @@ function renderNodes(){
           "div"
         );
 
+
       fill.className =
         "confidence-fill";
+
 
       fill.style.width =
         confidence + "%";
 
-      bar.appendChild(fill);
+
+      bar.appendChild(
+        fill
+      );
 
 
       const buttons =
         document.createElement(
           "div"
         );
+
 
       buttons.className =
         "node-buttons";
@@ -1597,14 +2311,18 @@ function renderNodes(){
           "button"
         );
 
+
       editButton.textContent =
         "Edit";
 
 
       editButton.addEventListener(
         "pointerdown",
-        event =>
-          event.stopPropagation()
+        event => {
+
+          event.stopPropagation();
+
+        }
       );
 
 
@@ -1613,6 +2331,7 @@ function renderNodes(){
         event => {
 
           event.stopPropagation();
+
 
           openNodeEditor(
             node.id
@@ -1628,21 +2347,30 @@ function renderNodes(){
 
 
       element.append(
+
         badge,
+
         title,
+
         description,
+
         bar,
+
         buttons
+
       );
 
 
       element.addEventListener(
         "mouseenter",
-        event =>
+        event => {
+
           showNodeTooltip(
             node,
             event
-          )
+          );
+
+        }
       );
 
 
@@ -1660,10 +2388,13 @@ function renderNodes(){
 
       element.addEventListener(
         "dblclick",
-        () =>
+        () => {
+
           openNodeEditor(
             node.id
-          )
+          );
+
+        }
       );
 
 
@@ -1683,18 +2414,27 @@ function renderNodes(){
 }
 
 
-function createNode(){
+
+/* =====================================================
+   CREATE NODE
+===================================================== */
+
+function createNode() {
 
   const title =
     document.getElementById(
       "nodeTitle"
     ).value.trim();
 
-  if(!title){
+
+  if(!title) {
+
     alert(
       "Enter a proposition."
     );
+
     return;
+
   }
 
 
@@ -1702,19 +2442,30 @@ function createNode(){
     activeProfile();
 
 
-  const confidenceByProfile = {};
+  const confidenceByProfile =
+    {};
 
+
+  /*
+    New proposition:
+    all profiles default to 50%.
+  */
 
   state.profiles.forEach(
-    p => {
+    item => {
 
       confidenceByProfile[
-        p.id
+        item.id
       ] = 50;
 
     }
   );
 
+
+  /*
+    Active profile gets
+    the entered confidence.
+  */
 
   confidenceByProfile[
     profile.id
@@ -1734,9 +2485,11 @@ function createNode(){
 
   state.nodes.push({
 
-    id:id(),
+    id:
+      makeId(),
 
-    title:title,
+    title:
+      title,
 
     description:
       document.getElementById(
@@ -1746,12 +2499,12 @@ function createNode(){
     x:
       scroll.scrollLeft +
       150 +
-      Math.random()*220,
+      Math.random() * 220,
 
     y:
       scroll.scrollTop +
       120 +
-      Math.random()*180,
+      Math.random() * 180,
 
     confidenceByProfile:
       confidenceByProfile
@@ -1761,36 +2514,54 @@ function createNode(){
 
   document.getElementById(
     "nodeTitle"
-  ).value = "";
+  ).value =
+    "";
+
 
   document.getElementById(
     "nodeDescription"
-  ).value = "";
+  ).value =
+    "";
+
 
   document.getElementById(
     "nodeConfidence"
-  ).value = 50;
+  ).value =
+    50;
+
 
   document.getElementById(
     "nodeConfidenceValue"
-  ).textContent = 50;
+  ).textContent =
+    50;
 
 
   save();
+
   render();
 
 }
 
 
+
+/* =====================================================
+   EDIT NODE
+===================================================== */
+
 function openNodeEditor(
   nodeId
-){
+) {
 
   const node =
-    nodeById(nodeId);
+    nodeById(
+      nodeId
+    );
 
-  if(!node){
+
+  if(!node) {
+
     return;
+
   }
 
 
@@ -1815,7 +2586,9 @@ function openNodeEditor(
 
 
   const confidence =
-    confidenceFor(node);
+    confidenceFor(
+      node
+    );
 
 
   document.getElementById(
@@ -1843,15 +2616,18 @@ function openNodeEditor(
 }
 
 
-function saveNode(){
+function saveNode() {
 
   const node =
     nodeById(
       editingNodeId
     );
 
-  if(!node){
+
+  if(!node) {
+
     return;
+
   }
 
 
@@ -1861,11 +2637,14 @@ function saveNode(){
     ).value.trim();
 
 
-  if(!title){
+  if(!title) {
+
     alert(
       "A proposition needs a title."
     );
+
     return;
+
   }
 
 
@@ -1898,20 +2677,27 @@ function saveNode(){
   ).close();
 
 
+  editingNodeId =
+    null;
+
+
   save();
+
   render();
 
 }
 
 
-function deleteNode(){
+function deleteNode() {
 
   if(
     !confirm(
       "Delete this proposition and every connection attached to it?"
     )
-  ){
+  ) {
+
     return;
+
   }
 
 
@@ -1926,8 +2712,15 @@ function deleteNode(){
   state.edges =
     state.edges.filter(
       edge =>
-        edge.from !== editingNodeId &&
-        edge.to !== editingNodeId
+
+        edge.from !==
+        editingNodeId
+
+        &&
+
+        edge.to !==
+        editingNodeId
+
     );
 
 
@@ -1936,30 +2729,36 @@ function deleteNode(){
   ).close();
 
 
-  editingNodeId = null;
+  editingNodeId =
+    null;
 
 
   save();
+
   render();
 
 }
 
 
-/* -----------------------------
-   NODE DRAGGING
------------------------------ */
+
+/* =====================================================
+   DRAGGING
+===================================================== */
 
 function startDrag(
   event
-){
+) {
 
   if(
-    event.button !== 0 ||
+    event.button !== 0
+    ||
     event.target.closest(
       "button"
     )
-  ){
+  ) {
+
     return;
+
   }
 
 
@@ -1978,9 +2777,11 @@ function startDrag(
 
   dragging = {
 
-    node:node,
+    node:
+      node,
 
-    element:element,
+    element:
+      element,
 
     startMouseX:
       event.clientX,
@@ -2011,7 +2812,9 @@ function startDrag(
   element.addEventListener(
     "pointerup",
     stopDrag,
-    {once:true}
+    {
+      once:true
+    }
   );
 
 }
@@ -2019,37 +2822,51 @@ function startDrag(
 
 function dragNode(
   event
-){
+) {
 
-  if(!dragging){
+  if(!dragging) {
+
     return;
+
   }
 
 
   dragging.node.x =
     Math.max(
+
       0,
-      dragging.startNodeX +
-      event.clientX -
+
+      dragging.startNodeX
+      +
+      event.clientX
+      -
       dragging.startMouseX
+
     );
 
 
   dragging.node.y =
     Math.max(
+
       0,
-      dragging.startNodeY +
-      event.clientY -
+
+      dragging.startNodeY
+      +
+      event.clientY
+      -
       dragging.startMouseY
+
     );
 
 
   dragging.element.style.left =
-    dragging.node.x + "px";
+    dragging.node.x +
+    "px";
 
 
   dragging.element.style.top =
-    dragging.node.y + "px";
+    dragging.node.y +
+    "px";
 
 
   renderEdges();
@@ -2057,10 +2874,12 @@ function dragNode(
 }
 
 
-function stopDrag(){
+function stopDrag() {
 
-  if(!dragging){
+  if(!dragging) {
+
     return;
+
   }
 
 
@@ -2070,23 +2889,27 @@ function stopDrag(){
   );
 
 
-  dragging = null;
+  dragging =
+    null;
+
 
   save();
 
 }
 
 
-/* -----------------------------
-   EDGES
------------------------------ */
 
-function updateNodeDropdowns(){
+/* =====================================================
+   NODE DROPDOWNS
+===================================================== */
+
+function updateNodeDropdowns() {
 
   const from =
     document.getElementById(
       "edgeFrom"
     );
+
 
   const to =
     document.getElementById(
@@ -2094,39 +2917,53 @@ function updateNodeDropdowns(){
     );
 
 
-  const oldFrom =
+  const previousFrom =
     from.value;
 
-  const oldTo =
+
+  const previousTo =
     to.value;
 
 
-  from.innerHTML = "";
-  to.innerHTML = "";
+  from.innerHTML =
+    "";
+
+
+  to.innerHTML =
+    "";
 
 
   state.nodes.forEach(
     node => {
 
-      const a =
+      const optionA =
         document.createElement(
           "option"
         );
 
-      a.value =
+
+      optionA.value =
         node.id;
 
-      a.textContent =
+
+      optionA.textContent =
         node.title;
 
 
-      const b =
-        a.cloneNode(true);
+      const optionB =
+        optionA.cloneNode(
+          true
+        );
 
 
-      from.appendChild(a);
+      from.appendChild(
+        optionA
+      );
 
-      to.appendChild(b);
+
+      to.appendChild(
+        optionB
+      );
 
     }
   );
@@ -2134,42 +2971,57 @@ function updateNodeDropdowns(){
 
   if(
     state.nodes.some(
-      n =>
-        n.id === oldFrom
+      node =>
+        node.id ===
+        previousFrom
     )
-  ){
+  ) {
+
     from.value =
-      oldFrom;
+      previousFrom;
+
   }
 
 
   if(
     state.nodes.some(
-      n =>
-        n.id === oldTo
+      node =>
+        node.id ===
+        previousTo
     )
-  ){
+  ) {
+
     to.value =
-      oldTo;
+      previousTo;
+
   }
 
 
   if(
     from.value ===
-    to.value &&
+    to.value
+    &&
     state.nodes.length > 1
-  ){
-    to.selectedIndex = 1;
+  ) {
+
+    to.selectedIndex =
+      1;
+
   }
 
 }
 
 
-function createEdge(){
+
+/* =====================================================
+   CREATE CONNECTION
+===================================================== */
+
+function createEdge() {
 
   if(
     state.nodes.length < 2
-  ){
+  ) {
 
     alert(
       "Create at least two propositions first."
@@ -2192,7 +3044,10 @@ function createEdge(){
     ).value;
 
 
-  if(from === to){
+  if(
+    from ===
+    to
+  ) {
 
     alert(
       "Choose two different propositions."
@@ -2205,15 +3060,23 @@ function createEdge(){
 
   state.edges.push({
 
-    id:id(),
+    id:
+      makeId(),
 
-    from:from,
+    from:
+      from,
 
-    to:to,
+    to:
+      to,
 
     type:
       document.getElementById(
         "edgeType"
+      ).value,
+
+    direction:
+      document.getElementById(
+        "edgeDirection"
       ).value,
 
     confidence:
@@ -2233,58 +3096,241 @@ function createEdge(){
 
   document.getElementById(
     "edgeDescription"
-  ).value = "";
+  ).value =
+    "";
 
 
   save();
+
   renderEdges();
 
 }
 
 
-function nodeCenter(
+
+/* =====================================================
+   NODE GEOMETRY
+===================================================== */
+
+function getNodeSize(
   node
-){
+) {
 
   const element =
     nodesLayer.querySelector(
+
       '[data-id="' +
       node.id +
       '"]'
+
     );
-
-
-  const width =
-    element ?
-      element.offsetWidth :
-      235;
-
-
-  const height =
-    element ?
-      element.offsetHeight :
-      112;
 
 
   return {
 
-    x:
-      node.x +
-      width/2,
+    width:
+      element
+        ? element.offsetWidth
+        : 240,
 
-    y:
-      node.y +
-      height/2
+    height:
+      element
+        ? element.offsetHeight
+        : 112
 
   };
 
 }
 
 
-function renderEdges(){
+function connectionPoints(
+  fromNode,
+  toNode
+) {
 
-  edgeSvg.innerHTML = "";
-  edgeLabels.innerHTML = "";
+  const fromSize =
+    getNodeSize(
+      fromNode
+    );
+
+
+  const toSize =
+    getNodeSize(
+      toNode
+    );
+
+
+  const fromCenter = {
+
+    x:
+      fromNode.x +
+      fromSize.width / 2,
+
+    y:
+      fromNode.y +
+      fromSize.height / 2
+
+  };
+
+
+  const toCenter = {
+
+    x:
+      toNode.x +
+      toSize.width / 2,
+
+    y:
+      toNode.y +
+      toSize.height / 2
+
+  };
+
+
+  const dx =
+    toCenter.x -
+    fromCenter.x;
+
+
+  const dy =
+    toCenter.y -
+    fromCenter.y;
+
+
+  /*
+    Finds where a line leaving
+    the center intersects the
+    rectangular node boundary.
+  */
+
+  function rectangleIntersection(
+    center,
+    width,
+    height,
+    vx,
+    vy
+  ) {
+
+    const halfWidth =
+      width / 2;
+
+
+    const halfHeight =
+      height / 2;
+
+
+    const xScale =
+      vx !== 0
+        ? halfWidth /
+          Math.abs(vx)
+        : Infinity;
+
+
+    const yScale =
+      vy !== 0
+        ? halfHeight /
+          Math.abs(vy)
+        : Infinity;
+
+
+    const scale =
+      Math.min(
+        xScale,
+        yScale
+      );
+
+
+    return {
+
+      x:
+        center.x +
+        vx * scale,
+
+      y:
+        center.y +
+        vy * scale
+
+    };
+
+  }
+
+
+  /*
+    Slight inset so arrowhead
+    doesn't overlap the box.
+  */
+
+  const start =
+    rectangleIntersection(
+
+      fromCenter,
+
+      fromSize.width + 8,
+
+      fromSize.height + 8,
+
+      dx,
+
+      dy
+
+    );
+
+
+  const end =
+    rectangleIntersection(
+
+      toCenter,
+
+      toSize.width + 8,
+
+      toSize.height + 8,
+
+      -dx,
+
+      -dy
+
+    );
+
+
+  return {
+    start,
+    end
+  };
+
+}
+
+
+
+/* =====================================================
+   RENDER CONNECTIONS
+===================================================== */
+
+function renderEdges() {
+
+  /*
+    Preserve SVG marker definitions.
+  */
+
+  const defs =
+    edgeSvg.querySelector(
+      "defs"
+    );
+
+
+  edgeSvg.innerHTML =
+    "";
+
+
+  if(defs) {
+
+    edgeSvg.appendChild(
+      defs
+    );
+
+  }
+
+
+  edgeLabels.innerHTML =
+    "";
 
 
   state.edges.forEach(
@@ -2295,6 +3341,7 @@ function renderEdges(){
           edge.from
         );
 
+
       const to =
         nodeById(
           edge.to
@@ -2304,22 +3351,35 @@ function renderEdges(){
       if(
         !from ||
         !to
-      ){
+      ) {
+
         return;
+
       }
 
 
+      const points =
+        connectionPoints(
+          from,
+          to
+        );
+
+
       const start =
-        nodeCenter(from);
+        points.start;
+
 
       const end =
-        nodeCenter(to);
+        points.end;
 
 
       const line =
         document.createElementNS(
+
           "http://www.w3.org/2000/svg",
+
           "line"
+
         );
 
 
@@ -2328,15 +3388,18 @@ function renderEdges(){
         start.x
       );
 
+
       line.setAttribute(
         "y1",
         start.y
       );
 
+
       line.setAttribute(
         "x2",
         end.x
       );
+
 
       line.setAttribute(
         "y2",
@@ -2349,6 +3412,68 @@ function renderEdges(){
         "edge " +
         edge.type
       );
+
+
+      const direction =
+        edge.direction ||
+        "forward";
+
+
+      /*
+        A → B
+      */
+
+      if(
+        direction ===
+        "forward"
+      ) {
+
+        line.setAttribute(
+          "marker-end",
+          "url(#arrowHead)"
+        );
+
+      }
+
+
+      /*
+        A ← B
+      */
+
+      if(
+        direction ===
+        "backward"
+      ) {
+
+        line.setAttribute(
+          "marker-start",
+          "url(#arrowHead)"
+        );
+
+      }
+
+
+      /*
+        A ↔ B
+      */
+
+      if(
+        direction ===
+        "both"
+      ) {
+
+        line.setAttribute(
+          "marker-start",
+          "url(#arrowHead)"
+        );
+
+
+        line.setAttribute(
+          "marker-end",
+          "url(#arrowHead)"
+        );
+
+      }
 
 
       edgeSvg.appendChild(
@@ -2371,8 +3496,12 @@ function renderEdges(){
           (
             start.x +
             end.x
-          ) / 2
-        ) + "px";
+          )
+          /
+          2
+        )
+        +
+        "px";
 
 
       label.style.top =
@@ -2380,30 +3509,72 @@ function renderEdges(){
           (
             start.y +
             end.y
-          ) / 2
-        ) + "px";
+          )
+          /
+          2
+        )
+        +
+        "px";
+
+
+      let directionSymbol =
+        "→";
+
+
+      if(
+        direction ===
+        "backward"
+      ) {
+
+        directionSymbol =
+          "←";
+
+      }
+
+
+      if(
+        direction ===
+        "both"
+      ) {
+
+        directionSymbol =
+          "↔";
+
+      }
 
 
       label.textContent =
+
+        directionSymbol
+        +
+        " "
+        +
         relationshipLabels[
           edge.type
-        ] +
-        " · " +
-        edge.confidence +
+        ]
+        +
+        " · "
+        +
+        edge.confidence
+        +
         "%";
 
 
       label.title =
-        edge.description ||
-        "Click to edit relationship";
+        edge.description
+        ||
+        "Click to edit this relationship";
 
 
       label.addEventListener(
         "click",
-        () =>
+        () => {
+
           openEdgeEditor(
             edge.id
-          )
+          );
+
+        }
       );
 
 
@@ -2417,19 +3588,27 @@ function renderEdges(){
 }
 
 
+
+/* =====================================================
+   EDIT CONNECTION
+===================================================== */
+
 function openEdgeEditor(
   edgeId
-){
+) {
 
   const edge =
     state.edges.find(
-      e =>
-        e.id === edgeId
+      item =>
+        item.id ===
+        edgeId
     );
 
 
-  if(!edge){
+  if(!edge) {
+
     return;
+
   }
 
 
@@ -2442,6 +3621,7 @@ function openEdgeEditor(
       edge.from
     );
 
+
   const to =
     nodeById(
       edge.to
@@ -2451,8 +3631,13 @@ function openEdgeEditor(
   document.getElementById(
     "edgePairText"
   ).textContent =
-    from.title +
-    " → " +
+
+    "A: "
+    +
+    from.title
+    +
+    "     B: "
+    +
     to.title;
 
 
@@ -2460,6 +3645,13 @@ function openEdgeEditor(
     "editEdgeType"
   ).value =
     edge.type;
+
+
+  document.getElementById(
+    "editEdgeDirection"
+  ).value =
+    edge.direction ||
+    "forward";
 
 
   document.getElementById(
@@ -2487,23 +3679,32 @@ function openEdgeEditor(
 }
 
 
-function saveEdge(){
+function saveEdge() {
 
   const edge =
     state.edges.find(
-      e =>
-        e.id === editingEdgeId
+      item =>
+        item.id ===
+        editingEdgeId
     );
 
 
-  if(!edge){
+  if(!edge) {
+
     return;
+
   }
 
 
   edge.type =
     document.getElementById(
       "editEdgeType"
+    ).value;
+
+
+  edge.direction =
+    document.getElementById(
+      "editEdgeDirection"
     ).value;
 
 
@@ -2526,18 +3727,24 @@ function saveEdge(){
   ).close();
 
 
+  editingEdgeId =
+    null;
+
+
   save();
+
   renderEdges();
 
 }
 
 
-function deleteEdge(){
+function deleteEdge() {
 
   state.edges =
     state.edges.filter(
       edge =>
-        edge.id !== editingEdgeId
+        edge.id !==
+        editingEdgeId
     );
 
 
@@ -2546,23 +3753,26 @@ function deleteEdge(){
   ).close();
 
 
-  editingEdgeId = null;
+  editingEdgeId =
+    null;
 
 
   save();
+
   renderEdges();
 
 }
 
 
-/* -----------------------------
-   TOOLTIP
------------------------------ */
+
+/* =====================================================
+   NODE TOOLTIP
+===================================================== */
 
 function showNodeTooltip(
   node,
   event
-){
+) {
 
   const profile =
     activeProfile();
@@ -2577,16 +3787,23 @@ function showNodeTooltip(
   document.getElementById(
     "tooltipDescription"
   ).textContent =
-    node.description ||
+    node.description
+    ||
     "No description.";
 
 
   document.getElementById(
     "tooltipMeta"
   ).textContent =
-    profile.name +
-    " confidence: " +
-    confidenceFor(node) +
+
+    profile.name
+    +
+    " confidence: "
+    +
+    confidenceFor(
+      node
+    )
+    +
     "%";
 
 
@@ -2594,43 +3811,54 @@ function showNodeTooltip(
     "block";
 
 
-  moveTooltip(event);
+  moveTooltip(
+    event
+  );
 
 }
 
 
 function moveTooltip(
   event
-){
+) {
 
   if(
     tooltip.style.display ===
     "none"
-  ){
+  ) {
+
     return;
+
   }
 
 
-  const margin = 14;
+  const margin =
+    14;
 
 
   let x =
-    event.clientX + 16;
+    event.clientX +
+    16;
+
 
   let y =
-    event.clientY + 16;
+    event.clientY +
+    16;
 
 
   if(
     x +
-    tooltip.offsetWidth >
+    tooltip.offsetWidth
+    >
     window.innerWidth -
     margin
-  ){
+  ) {
 
     x =
-      event.clientX -
-      tooltip.offsetWidth -
+      event.clientX
+      -
+      tooltip.offsetWidth
+      -
       16;
 
   }
@@ -2638,14 +3866,17 @@ function moveTooltip(
 
   if(
     y +
-    tooltip.offsetHeight >
+    tooltip.offsetHeight
+    >
     window.innerHeight -
     margin
-  ){
+  ) {
 
     y =
-      event.clientY -
-      tooltip.offsetHeight -
+      event.clientY
+      -
+      tooltip.offsetHeight
+      -
       16;
 
   }
@@ -2655,19 +3886,23 @@ function moveTooltip(
     Math.max(
       margin,
       x
-    ) + "px";
+    )
+    +
+    "px";
 
 
   tooltip.style.top =
     Math.max(
       margin,
       y
-    ) + "px";
+    )
+    +
+    "px";
 
 }
 
 
-function hideTooltip(){
+function hideTooltip() {
 
   tooltip.style.display =
     "none";
@@ -2675,14 +3910,16 @@ function hideTooltip(){
 }
 
 
-/* -----------------------------
-   EXPORT / IMPORT
------------------------------ */
 
-function exportGraph(){
+/* =====================================================
+   EXPORT
+===================================================== */
+
+function exportGraph() {
 
   const blob =
     new Blob(
+
       [
         JSON.stringify(
           state,
@@ -2690,10 +3927,12 @@ function exportGraph(){
           2
         )
       ],
+
       {
         type:
           "application/json"
       }
+
     );
 
 
@@ -2712,6 +3951,7 @@ function exportGraph(){
   link.href =
     url;
 
+
   link.download =
     "silo-graph.json";
 
@@ -2723,6 +3963,7 @@ function exportGraph(){
 
   link.click();
 
+
   link.remove();
 
 
@@ -2733,18 +3974,23 @@ function exportGraph(){
 }
 
 
+
+/* =====================================================
+   IMPORT
+===================================================== */
+
 function importGraph(
   file
-){
+) {
 
   const reader =
     new FileReader();
 
 
   reader.onload =
-    function(){
+    function() {
 
-      try{
+      try {
 
         const incoming =
           JSON.parse(
@@ -2753,16 +3999,24 @@ function importGraph(
 
 
         if(
+
           !Array.isArray(
             incoming.nodes
-          ) ||
+          )
+
+          ||
+
           !Array.isArray(
             incoming.edges
-          ) ||
+          )
+
+          ||
+
           !Array.isArray(
             incoming.profiles
           )
-        ){
+
+        ) {
 
           throw new Error(
             "Invalid graph"
@@ -2771,24 +4025,50 @@ function importGraph(
         }
 
 
+        incoming.edges.forEach(
+          edge => {
+
+            if(
+              !edge.direction
+            ) {
+
+              edge.direction =
+                "forward";
+
+            }
+
+          }
+        );
+
+
         state.nodes =
           incoming.nodes;
+
 
         state.edges =
           incoming.edges;
 
+
         state.profiles =
           incoming.profiles;
 
+
         state.activeProfileId =
-          incoming.activeProfileId ||
+          incoming.activeProfileId
+          ||
           incoming.profiles[0].id;
 
 
         save();
+
         render();
 
-      }catch(error){
+      } catch(error) {
+
+        console.error(
+          error
+        );
+
 
         alert(
           "This is not a valid Silo graph file."
@@ -2806,11 +4086,12 @@ function importGraph(
 }
 
 
-/* -----------------------------
-   STATUS
------------------------------ */
 
-function updateStatus(){
+/* =====================================================
+   STATUS
+===================================================== */
+
+function updateStatus() {
 
   const profile =
     activeProfile();
@@ -2820,42 +4101,57 @@ function updateStatus(){
     "status"
   ).textContent =
 
-    state.nodes.length +
-    " propositions · " +
+    state.nodes.length
+    +
+    " propositions · "
 
-    state.edges.length +
-    " connections · " +
+    +
 
-    state.profiles.length +
-    " profiles · Viewing " +
+    state.edges.length
+    +
+    " connections · "
+
+    +
+
+    state.profiles.length
+    +
+    " profiles · Viewing "
+
+    +
 
     (
-      profile ?
-        profile.name :
-        "none"
+      profile
+        ? profile.name
+        : "none"
     );
 
 }
 
 
-/* -----------------------------
-   RENDER
------------------------------ */
 
-function render(){
+/* =====================================================
+   COMPLETE RENDER
+===================================================== */
+
+function render() {
 
   renderProfiles();
+
   renderNodes();
+
   updateNodeDropdowns();
+
   renderEdges();
+
   updateStatus();
 
 }
 
 
-/* -----------------------------
-   EVENTS
------------------------------ */
+
+/* =====================================================
+   EVENTS — PROFILE
+===================================================== */
 
 document.getElementById(
   "profileSelect"
@@ -2893,10 +4189,13 @@ document.getElementById(
   "cancelProfileButton"
 ).addEventListener(
   "click",
-  () =>
+  () => {
+
     document.getElementById(
       "profileDialog"
-    ).close()
+    ).close();
+
+  }
 );
 
 
@@ -2907,6 +4206,11 @@ document.getElementById(
   deleteProfile
 );
 
+
+
+/* =====================================================
+   EVENTS — NODE
+===================================================== */
 
 document.getElementById(
   "nodeConfidence"
@@ -2966,12 +4270,20 @@ document.getElementById(
   "cancelNodeButton"
 ).addEventListener(
   "click",
-  () =>
+  () => {
+
     document.getElementById(
       "nodeDialog"
-    ).close()
+    ).close();
+
+  }
 );
 
+
+
+/* =====================================================
+   EVENTS — EDGE
+===================================================== */
 
 document.getElementById(
   "edgeConfidence"
@@ -3031,12 +4343,20 @@ document.getElementById(
   "cancelEdgeButton"
 ).addEventListener(
   "click",
-  () =>
+  () => {
+
     document.getElementById(
       "edgeDialog"
-    ).close()
+    ).close();
+
+  }
 );
 
+
+
+/* =====================================================
+   EVENTS — IMPORT / EXPORT
+===================================================== */
 
 document.getElementById(
   "exportButton"
@@ -3050,10 +4370,13 @@ document.getElementById(
   "importButton"
 ).addEventListener(
   "click",
-  () =>
+  () => {
+
     document.getElementById(
       "importFile"
-    ).click()
+    ).click();
+
+  }
 );
 
 
@@ -3066,9 +4389,15 @@ document.getElementById(
     const file =
       event.target.files[0];
 
-    if(file){
-      importGraph(file);
+
+    if(file) {
+
+      importGraph(
+        file
+      );
+
     }
+
 
     event.target.value =
       "";
@@ -3076,6 +4405,11 @@ document.getElementById(
   }
 );
 
+
+
+/* =====================================================
+   RESET
+===================================================== */
 
 document.getElementById(
   "clearButton"
@@ -3085,21 +4419,30 @@ document.getElementById(
 
     if(
       !confirm(
-        "Delete the entire graph and all profiles?"
+        "Reset the entire graph and profiles to the default example?"
       )
-    ){
+    ) {
+
       return;
+
     }
+
 
     localStorage.removeItem(
       STORAGE_KEY
     );
+
 
     location.reload();
 
   }
 );
 
+
+
+/* =====================================================
+   START
+===================================================== */
 
 render();
 
