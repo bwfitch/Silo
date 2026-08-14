@@ -1,14 +1,2779 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Website</title>
-</head>
-<body>
-  <h1>Hello world</h1>
-  <p>This website is hosted on GitHub.</p>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silo — Proposition Graph</title>
 
-  <button onclick="alert('It works!')">
-    Click me
-  </button>
+  <style>
+    :root {
+      --bg: #090d18;
+      --panel: #111827;
+      --panel2: #182235;
+      --border: #2e3a53;
+      --text: #edf2ff;
+      --muted: #9aa9c7;
+      --accent: #7c6cff;
+
+      --support: #42d39c;
+      --contradict: #ff6877;
+      --depend: #f5c451;
+      --related: #72a5ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text);
+      border-radius: 9px;
+      padding: 8px 11px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: #657699;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    button.danger {
+      color: #ffadb6;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      grid-template-rows: 62px 1fr;
+      height: 100vh;
+    }
+
+    /* HEADER */
+
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      background: #0c1220;
+      border-bottom: 1px solid var(--border);
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .logo {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+      background: var(--accent);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* SIDEBAR */
+
+    aside {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 14px;
+      overflow-y: auto;
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 13px;
+      margin-bottom: 13px;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0 5px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0b1220;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    input[type="range"] {
+      padding: 0;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* WORKSPACE */
+
+    #scrollArea {
+      position: relative;
+      overflow: auto;
+
+      background:
+        radial-gradient(
+          circle at 45% 30%,
+          rgba(124, 108, 255, 0.08),
+          transparent 40%
+        ),
+        linear-gradient(
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        auto,
+        32px 32px,
+        32px 32px;
+    }
+
+    #workspace {
+      position: relative;
+      width: 2200px;
+      height: 1500px;
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    /* CONNECTION LINES */
+
+    #edges {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .edge-line {
+      fill: none;
+      stroke-width: 2.5;
+      opacity: 0.85;
+    }
+
+    .edge-line.supports {
+      stroke: var(--support);
+    }
+
+    .edge-line.contradicts {
+      stroke: var(--contradict);
+      stroke-dasharray: 8 6;
+    }
+
+    .edge-line.depends {
+      stroke: var(--depend);
+    }
+
+    .edge-line.related {
+      stroke: var(--related);
+      stroke-dasharray: 3 6;
+    }
+
+    #edgeLabels {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .edge-label {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+
+      max-width: 200px;
+      padding: 5px 8px;
+
+      border-radius: 999px;
+      border: 1px solid var(--border);
+
+      background: rgba(8, 13, 25, 0.96);
+      color: var(--text);
+
+      font-size: 11px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* NODES */
+
+    .node {
+      position: absolute;
+      width: 230px;
+      min-height: 100px;
+
+      padding: 13px;
+
+      border-radius: 15px;
+      border: 1px solid #485b82;
+
+      background: linear-gradient(
+        180deg,
+        #19233a,
+        #121a2b
+      );
+
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+
+      cursor: grab;
+      user-select: none;
+
+      z-index: 5;
+    }
+
+    .node:hover {
+      border-color: var(--accent);
+    }
+
+    .node:active {
+      cursor: grabbing;
+    }
+
+    .node-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+      padding-right: 44px;
+    }
+
+    .node-description {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .confidence {
+      position: absolute;
+      right: 9px;
+      top: 9px;
+
+      border: 1px solid var(--border);
+      border-radius: 999px;
+
+      padding: 3px 6px;
+
+      background: #0b1220;
+
+      font-size: 10px;
+    }
+
+    .node-buttons {
+      margin-top: 9px;
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .node:hover .node-buttons {
+      opacity: 1;
+    }
+
+    .node-buttons button {
+      padding: 4px 7px;
+      font-size: 10px;
+    }
+
+    /* HOVER TOOLTIP */
+
+    #tooltip {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+
+      width: min(380px, calc(100vw - 30px));
+
+      padding: 13px;
+
+      border-radius: 12px;
+      border: 1px solid #53698f;
+
+      background: rgba(7, 11, 22, 0.98);
+
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+
+      pointer-events: none;
+    }
+
+    #tooltipTitle {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    #tooltipDescription {
+      margin: 0;
+
+      font-size: 12px;
+      color: #cad5ec;
+      line-height: 1.55;
+
+      white-space: pre-wrap;
+    }
+
+    #tooltipMeta {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* LEGEND */
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .line-sample {
+      width: 30px;
+      height: 3px;
+      border-radius: 3px;
+    }
+
+    /* STATUS */
+
+    #status {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+
+      padding: 7px 10px;
+
+      background: rgba(8, 13, 25, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      color: var(--muted);
+      font-size: 11px;
+
+      z-index: 10;
+    }
+
+    /* DIALOG */
+
+    dialog {
+      width: min(500px, calc(100vw - 32px));
+
+      padding: 0;
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      background: var(--panel);
+      color: var(--text);
+
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .dialog-content {
+      padding: 18px;
+    }
+
+    .dialog-content h2 {
+      margin: 0 0 10px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .grow {
+      flex: 1;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: 62px 320px 1fr;
+      }
+
+      header {
+        grid-row: 1;
+      }
+
+      aside {
+        grid-row: 2;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      #scrollArea {
+        grid-row: 3;
+      }
+
+      .top-actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="brand">
+      <div class="logo">S</div>
+
+      <div>
+        <h1>Silo</h1>
+        <small>Proposition network</small>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button id="exportButton">
+        Export
+      </button>
+
+      <button id="importButton">
+        Import
+      </button>
+
+      <button id="resetButton" class="danger">
+        Clear graph
+      </button>
+    </div>
+  </header>
+
+
+  <!-- SIDEBAR -->
+
+  <aside>
+
+    <section class="section">
+
+      <h2>Create proposition</h2>
+
+      <label for="nodeTitle">
+        Proposition
+      </label>
+
+      <input
+        id="nodeTitle"
+        placeholder="Example: Jesus rose from the dead"
+      />
+
+      <label for="nodeDescription">
+        Full description
+      </label>
+
+      <textarea
+        id="nodeDescription"
+        placeholder="Explain the proposition, evidence, qualifications, sources, etc."
+      ></textarea>
+
+      <label for="nodeConfidence">
+        Confidence:
+        <span id="nodeConfidenceValue">50</span>%
+      </label>
+
+      <input
+        id="nodeConfidence"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+      />
+
+      <button
+        id="addNodeButton"
+        class="primary"
+        style="width:100%; margin-top:12px;"
+      >
+        Create proposition
+      </button>
+
+      <p class="hint">
+        Drag nodes to move them.
+        Hover over a node to see its full description.
+        Double-click a node to edit it.
+      </p>
+
+    </section>
+
+
+    <section class="section">
+
+      <h2>Create connection</h2>
+
+      <label for="edgeFrom">
+        From
+      </label>
+
+      <select id="edgeFrom"></select>
+
+      <label for="edgeTo">
+        To
+      </label>
+
+      <select id="edgeTo"></select>
+
+      <div class="row">
+
+        <div>
+
+          <label for="edgeType">
+            Relationship
+          </label>
+
+          <select id="edgeType">
+
+            <option value="supports">
+              Supports
+            </option>
+
+            <option value="contradicts">
+              Contradicts
+            </option>
+
+            <option value="depends">
+              Depends on
+            </option>
+
+            <option value="related">
+              Related to
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div>
+
+          <label for="edgeStrength">
+            Strength
+          </label>
+
+          <input
+            id="edgeStrength"
+            type="number"
+            min="0"
+            max="100"
+            value="70"
+          />
+
+        </div>
+
+      </div>
+
+
+      <label for="edgeDescription">
+        Relationship explanation
+      </label>
+
+      <textarea
+        id="edgeDescription"
+        placeholder="Explain how the propositions relate..."
+      ></textarea>
+
+
+      <button
+        id="addEdgeButton"
+        class="primary"
+        style="width:100%; margin-top:12px;"
+      >
+        Create connection
+      </button>
+
+    </section>
+
+
+    <section class="section">
+
+      <h2>Relationships</h2>
+
+      <div class="legend">
+
+        <div class="legend-row">
+          <div
+            class="line-sample"
+            style="background:var(--support);"
+          ></div>
+          Supports
+        </div>
+
+        <div class="legend-row">
+          <div
+            class="line-sample"
+            style="background:var(--contradict);"
+          ></div>
+          Contradicts
+        </div>
+
+        <div class="legend-row">
+          <div
+            class="line-sample"
+            style="background:var(--depend);"
+          ></div>
+          Depends on
+        </div>
+
+        <div class="legend-row">
+          <div
+            class="line-sample"
+            style="background:var(--related);"
+          ></div>
+          Related to
+        </div>
+
+      </div>
+
+    </section>
+
+  </aside>
+
+
+  <!-- GRAPH -->
+
+  <main id="scrollArea">
+
+    <div id="workspace">
+
+      <svg id="edges">
+
+        <defs>
+
+          <marker
+            id="arrow"
+            markerWidth="8"
+            markerHeight="8"
+            refX="7"
+            refY="3"
+            orient="auto"
+            markerUnits="strokeWidth"
+          >
+            <path
+              d="M0,0 L0,6 L8,3 z"
+              fill="context-stroke"
+            />
+          </marker>
+
+        </defs>
+
+      </svg>
+
+      <div id="edgeLabels"></div>
+
+      <div id="nodes"></div>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<div id="status">
+  0 propositions · 0 connections
+</div>
+
+
+<!-- TOOLTIP -->
+
+<div id="tooltip">
+
+  <strong id="tooltipTitle"></strong>
+
+  <p id="tooltipDescription"></p>
+
+  <div id="tooltipMeta"></div>
+
+</div>
+
+
+<!-- NODE EDITOR -->
+
+<dialog id="nodeDialog">
+
+  <div class="dialog-content">
+
+    <h2>Edit proposition</h2>
+
+    <label for="editTitle">
+      Proposition
+    </label>
+
+    <input id="editTitle" />
+
+
+    <label for="editDescription">
+      Full description
+    </label>
+
+    <textarea id="editDescription"></textarea>
+
+
+    <label for="editConfidence">
+      Confidence:
+      <span id="editConfidenceValue"></span>%
+    </label>
+
+    <input
+      id="editConfidence"
+      type="range"
+      min="0"
+      max="100"
+    />
+
+
+    <div class="dialog-actions">
+
+      <button
+        id="deleteNodeButton"
+        class="danger"
+      >
+        Delete
+      </button>
+
+      <div class="grow"></div>
+
+      <button id="cancelNodeButton">
+        Cancel
+      </button>
+
+      <button
+        id="saveNodeButton"
+        class="primary"
+      >
+        Save
+      </button>
+
+    </div>
+
+  </div>
+
+</dialog>
+
+
+<!-- EDGE DETAILS -->
+
+<dialog id="edgeDialog">
+
+  <div class="dialog-content">
+
+    <h2 id="edgeDialogTitle">
+      Relationship
+    </h2>
+
+    <p
+      id="edgeDialogDescription"
+      style="
+        color:var(--muted);
+        line-height:1.55;
+        white-space:pre-wrap;
+      "
+    ></p>
+
+
+    <div class="dialog-actions">
+
+      <button
+        id="deleteEdgeButton"
+        class="danger"
+      >
+        Delete connection
+      </button>
+
+      <div class="grow"></div>
+
+      <button id="closeEdgeButton">
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</dialog>
+
+
+<input
+  id="importFile"
+  type="file"
+  accept=".json,application/json"
+  hidden
+/>
+
+
+<script>
+
+  /* ---------------------------------
+     DATA
+  --------------------------------- */
+
+  const STORAGE_KEY =
+    "silo-proposition-graph-v1";
+
+
+  function newID() {
+
+    if (
+      window.crypto &&
+      typeof crypto.randomUUID === "function"
+    ) {
+      return crypto.randomUUID();
+    }
+
+    return (
+      Date.now().toString(36) +
+      Math.random().toString(36).slice(2)
+    );
+  }
+
+
+  function loadState() {
+
+    try {
+
+      const stored =
+        localStorage.getItem(STORAGE_KEY);
+
+      if (stored) {
+        return JSON.parse(stored);
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Could not load saved graph.",
+        error
+      );
+
+    }
+
+    return null;
+  }
+
+
+  const storedState = loadState();
+
+
+  const state =
+    storedState || {
+
+      nodes: [
+
+        {
+          id: newID(),
+
+          title:
+            "Jesus rose from the dead",
+
+          description:
+            "The proposition that Jesus of Nazareth physically rose from death following his crucifixion.",
+
+          confidence: 65,
+
+          x: 470,
+          y: 230
+        },
+
+        {
+          id: newID(),
+
+          title:
+            "The disciples sincerely believed they saw the risen Jesus",
+
+          description:
+            "The earliest followers of Jesus genuinely believed that they experienced appearances of Jesus after his death.",
+
+          confidence: 82,
+
+          x: 130,
+          y: 500
+        },
+
+        {
+          id: newID(),
+
+          title:
+            "Christianity is true",
+
+          description:
+            "The central theological claims of Christianity accurately describe reality.",
+
+          confidence: 55,
+
+          x: 850,
+          y: 500
+        }
+
+      ],
+
+      edges: []
+
+    };
+
+
+  if (
+    !storedState &&
+    state.nodes.length >= 3
+  ) {
+
+    state.edges.push(
+
+      {
+        id: newID(),
+
+        from:
+          state.nodes[1].id,
+
+        to:
+          state.nodes[0].id,
+
+        type:
+          "supports",
+
+        strength:
+          75,
+
+        description:
+          "Sincere post-crucifixion appearance claims provide evidence for the resurrection, though alternative explanations remain possible."
+      },
+
+      {
+        id: newID(),
+
+        from:
+          state.nodes[0].id,
+
+        to:
+          state.nodes[2].id,
+
+        type:
+          "supports",
+
+        strength:
+          90,
+
+        description:
+          "If the resurrection occurred, it would strongly support central Christian claims about Jesus."
+      }
+
+    );
+
+  }
+
+
+  /* ---------------------------------
+     ELEMENTS
+  --------------------------------- */
+
+  const nodesLayer =
+    document.getElementById("nodes");
+
+  const edgesSVG =
+    document.getElementById("edges");
+
+  const edgeLabels =
+    document.getElementById("edgeLabels");
+
+  const tooltip =
+    document.getElementById("tooltip");
+
+
+  const relationText = {
+
+    supports:
+      "supports",
+
+    contradicts:
+      "contradicts",
+
+    depends:
+      "depends on",
+
+    related:
+      "related to"
+
+  };
+
+
+  let draggedNode = null;
+
+  let editingNodeID = null;
+
+  let editingEdgeID = null;
+
+
+  /* ---------------------------------
+     SAVE
+  --------------------------------- */
+
+  function save() {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(state)
+    );
+
+    updateStatus();
+  }
+
+
+  function updateStatus() {
+
+    document.getElementById(
+      "status"
+    ).textContent =
+
+      state.nodes.length +
+      " proposition" +
+      (state.nodes.length === 1 ? "" : "s") +
+
+      " · " +
+
+      state.edges.length +
+      " connection" +
+      (state.edges.length === 1 ? "" : "s");
+
+  }
+
+
+  /* ---------------------------------
+     HELPERS
+  --------------------------------- */
+
+  function getNode(id) {
+
+    return state.nodes.find(
+      node => node.id === id
+    );
+
+  }
+
+
+  function shorten(
+    text,
+    length = 88
+  ) {
+
+    if (!text) {
+      return "No description.";
+    }
+
+    if (
+      text.length <= length
+    ) {
+      return text;
+    }
+
+    return (
+      text.slice(0, length) +
+      "…"
+    );
+
+  }
+
+
+  function getNodeElement(id) {
+
+    return nodesLayer.querySelector(
+      '[data-id="' + id + '"]'
+    );
+
+  }
+
+
+  function nodeCenter(node) {
+
+    const element =
+      getNodeElement(node.id);
+
+    const width =
+      element ?
+        element.offsetWidth :
+        230;
+
+    const height =
+      element ?
+        element.offsetHeight :
+        100;
+
+    return {
+
+      x:
+        node.x +
+        width / 2,
+
+      y:
+        node.y +
+        height / 2
+
+    };
+
+  }
+
+
+  /* ---------------------------------
+     RENDER EVERYTHING
+  --------------------------------- */
+
+  function render() {
+
+    renderNodes();
+
+    renderEdges();
+
+    updateDropdowns();
+
+    updateStatus();
+
+  }
+
+
+  /* ---------------------------------
+     NODES
+  --------------------------------- */
+
+  function renderNodes() {
+
+    nodesLayer.innerHTML = "";
+
+
+    state.nodes.forEach(
+      node => {
+
+        const element =
+          document.createElement(
+            "article"
+          );
+
+
+        element.className =
+          "node";
+
+
+        element.dataset.id =
+          node.id;
+
+
+        element.style.left =
+          node.x + "px";
+
+
+        element.style.top =
+          node.y + "px";
+
+
+        const confidence =
+          document.createElement(
+            "div"
+          );
+
+
+        confidence.className =
+          "confidence";
+
+
+        confidence.textContent =
+          node.confidence + "%";
+
+
+        const title =
+          document.createElement(
+            "div"
+          );
+
+
+        title.className =
+          "node-title";
+
+
+        title.textContent =
+          node.title;
+
+
+        const description =
+          document.createElement(
+            "div"
+          );
+
+
+        description.className =
+          "node-description";
+
+
+        description.textContent =
+          shorten(
+            node.description
+          );
+
+
+        const buttons =
+          document.createElement(
+            "div"
+          );
+
+
+        buttons.className =
+          "node-buttons";
+
+
+        const editButton =
+          document.createElement(
+            "button"
+          );
+
+
+        editButton.textContent =
+          "Edit";
+
+
+        editButton.addEventListener(
+          "pointerdown",
+          event => {
+
+            event.stopPropagation();
+
+          }
+        );
+
+
+        editButton.addEventListener(
+          "click",
+          event => {
+
+            event.stopPropagation();
+
+            openNodeEditor(
+              node.id
+            );
+
+          }
+        );
+
+
+        buttons.appendChild(
+          editButton
+        );
+
+
+        element.append(
+          confidence,
+          title,
+          description,
+          buttons
+        );
+
+
+        element.addEventListener(
+          "mouseenter",
+          event => {
+
+            showTooltip(
+              node,
+              event
+            );
+
+          }
+        );
+
+
+        element.addEventListener(
+          "mousemove",
+          moveTooltip
+        );
+
+
+        element.addEventListener(
+          "mouseleave",
+          hideTooltip
+        );
+
+
+        element.addEventListener(
+          "dblclick",
+          () => {
+
+            openNodeEditor(
+              node.id
+            );
+
+          }
+        );
+
+
+        element.addEventListener(
+          "pointerdown",
+          startDrag
+        );
+
+
+        nodesLayer.appendChild(
+          element
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ---------------------------------
+     CONNECTIONS
+  --------------------------------- */
+
+  function renderEdges() {
+
+    /*
+      Preserve <defs> so the
+      arrow marker remains.
+    */
+
+    const defs =
+      edgesSVG.querySelector(
+        "defs"
+      );
+
+
+    edgesSVG.innerHTML = "";
+
+
+    if (defs) {
+      edgesSVG.appendChild(
+        defs
+      );
+    }
+
+
+    edgeLabels.innerHTML = "";
+
+
+    state.edges.forEach(
+      edge => {
+
+        const from =
+          getNode(edge.from);
+
+        const to =
+          getNode(edge.to);
+
+
+        if (
+          !from ||
+          !to
+        ) {
+          return;
+        }
+
+
+        const start =
+          nodeCenter(from);
+
+        const end =
+          nodeCenter(to);
+
+
+        const line =
+          document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+
+
+        line.setAttribute(
+          "x1",
+          start.x
+        );
+
+
+        line.setAttribute(
+          "y1",
+          start.y
+        );
+
+
+        line.setAttribute(
+          "x2",
+          end.x
+        );
+
+
+        line.setAttribute(
+          "y2",
+          end.y
+        );
+
+
+        line.setAttribute(
+          "class",
+          "edge-line " +
+          edge.type
+        );
+
+
+        line.setAttribute(
+          "marker-end",
+          "url(#arrow)"
+        );
+
+
+        edgesSVG.appendChild(
+          line
+        );
+
+
+        const label =
+          document.createElement(
+            "button"
+          );
+
+
+        label.className =
+          "edge-label";
+
+
+        label.style.left =
+          (
+            (
+              start.x +
+              end.x
+            ) / 2
+          ) + "px";
+
+
+        label.style.top =
+          (
+            (
+              start.y +
+              end.y
+            ) / 2
+          ) + "px";
+
+
+        label.textContent =
+          relationText[
+            edge.type
+          ] +
+          " · " +
+          edge.strength +
+          "%";
+
+
+        label.title =
+          edge.description ||
+          "Click for relationship details";
+
+
+        label.addEventListener(
+          "click",
+          () => {
+
+            openEdgeDialog(
+              edge.id
+            );
+
+          }
+        );
+
+
+        edgeLabels.appendChild(
+          label
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ---------------------------------
+     CREATE NODE
+  --------------------------------- */
+
+  function createNode() {
+
+    const title =
+      document.getElementById(
+        "nodeTitle"
+      ).value.trim();
+
+
+    if (!title) {
+
+      alert(
+        "Enter a proposition."
+      );
+
+      return;
+
+    }
+
+
+    const scrollArea =
+      document.getElementById(
+        "scrollArea"
+      );
+
+
+    const node = {
+
+      id:
+        newID(),
+
+      title:
+        title,
+
+      description:
+        document.getElementById(
+          "nodeDescription"
+        ).value.trim(),
+
+      confidence:
+        Number(
+          document.getElementById(
+            "nodeConfidence"
+          ).value
+        ),
+
+      x:
+        scrollArea.scrollLeft +
+        150 +
+        Math.random() * 200,
+
+      y:
+        scrollArea.scrollTop +
+        100 +
+        Math.random() * 180
+
+    };
+
+
+    state.nodes.push(node);
+
+
+    document.getElementById(
+      "nodeTitle"
+    ).value = "";
+
+
+    document.getElementById(
+      "nodeDescription"
+    ).value = "";
+
+
+    document.getElementById(
+      "nodeConfidence"
+    ).value = 50;
+
+
+    document.getElementById(
+      "nodeConfidenceValue"
+    ).textContent = 50;
+
+
+    save();
+
+    render();
+
+  }
+
+
+  /* ---------------------------------
+     CREATE CONNECTION
+  --------------------------------- */
+
+  function createEdge() {
+
+    if (
+      state.nodes.length < 2
+    ) {
+
+      alert(
+        "Create at least two propositions first."
+      );
+
+      return;
+
+    }
+
+
+    const from =
+      document.getElementById(
+        "edgeFrom"
+      ).value;
+
+
+    const to =
+      document.getElementById(
+        "edgeTo"
+      ).value;
+
+
+    if (
+      from === to
+    ) {
+
+      alert(
+        "Select two different propositions."
+      );
+
+      return;
+
+    }
+
+
+    const strength =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          Number(
+            document.getElementById(
+              "edgeStrength"
+            ).value
+          )
+        )
+      );
+
+
+    state.edges.push({
+
+      id:
+        newID(),
+
+      from:
+        from,
+
+      to:
+        to,
+
+      type:
+        document.getElementById(
+          "edgeType"
+        ).value,
+
+      strength:
+        strength,
+
+      description:
+        document.getElementById(
+          "edgeDescription"
+        ).value.trim()
+
+    });
+
+
+    document.getElementById(
+      "edgeDescription"
+    ).value = "";
+
+
+    save();
+
+    renderEdges();
+
+    updateStatus();
+
+  }
+
+
+  /* ---------------------------------
+     DROPDOWNS
+  --------------------------------- */
+
+  function updateDropdowns() {
+
+    const fromSelect =
+      document.getElementById(
+        "edgeFrom"
+      );
+
+
+    const toSelect =
+      document.getElementById(
+        "edgeTo"
+      );
+
+
+    const previousFrom =
+      fromSelect.value;
+
+
+    const previousTo =
+      toSelect.value;
+
+
+    fromSelect.innerHTML = "";
+
+    toSelect.innerHTML = "";
+
+
+    state.nodes.forEach(
+      node => {
+
+        const option1 =
+          document.createElement(
+            "option"
+          );
+
+
+        option1.value =
+          node.id;
+
+
+        option1.textContent =
+          node.title;
+
+
+        const option2 =
+          option1.cloneNode(true);
+
+
+        fromSelect.appendChild(
+          option1
+        );
+
+
+        toSelect.appendChild(
+          option2
+        );
+
+      }
+    );
+
+
+    if (
+      state.nodes.some(
+        node =>
+          node.id ===
+          previousFrom
+      )
+    ) {
+
+      fromSelect.value =
+        previousFrom;
+
+    }
+
+
+    if (
+      state.nodes.some(
+        node =>
+          node.id ===
+          previousTo
+      )
+    ) {
+
+      toSelect.value =
+        previousTo;
+
+    }
+
+
+    if (
+      fromSelect.value ===
+      toSelect.value &&
+      state.nodes.length > 1
+    ) {
+
+      toSelect.selectedIndex = 1;
+
+    }
+
+  }
+
+
+  /* ---------------------------------
+     DRAGGING
+  --------------------------------- */
+
+  function startDrag(event) {
+
+    if (
+      event.button !== 0 ||
+      event.target.closest(
+        "button"
+      )
+    ) {
+      return;
+    }
+
+
+    hideTooltip();
+
+
+    const element =
+      event.currentTarget;
+
+
+    const node =
+      getNode(
+        element.dataset.id
+      );
+
+
+    draggedNode = {
+
+      node:
+        node,
+
+      element:
+        element,
+
+      startMouseX:
+        event.clientX,
+
+      startMouseY:
+        event.clientY,
+
+      startNodeX:
+        node.x,
+
+      startNodeY:
+        node.y
+
+    };
+
+
+    element.setPointerCapture(
+      event.pointerId
+    );
+
+
+    element.addEventListener(
+      "pointermove",
+      dragNode
+    );
+
+
+    element.addEventListener(
+      "pointerup",
+      stopDrag,
+      {
+        once: true
+      }
+    );
+
+  }
+
+
+  function dragNode(event) {
+
+    if (!draggedNode) {
+      return;
+    }
+
+
+    const dx =
+      event.clientX -
+      draggedNode.startMouseX;
+
+
+    const dy =
+      event.clientY -
+      draggedNode.startMouseY;
+
+
+    draggedNode.node.x =
+      Math.max(
+        0,
+        draggedNode.startNodeX +
+        dx
+      );
+
+
+    draggedNode.node.y =
+      Math.max(
+        0,
+        draggedNode.startNodeY +
+        dy
+      );
+
+
+    draggedNode.element.style.left =
+      draggedNode.node.x +
+      "px";
+
+
+    draggedNode.element.style.top =
+      draggedNode.node.y +
+      "px";
+
+
+    renderEdges();
+
+  }
+
+
+  function stopDrag() {
+
+    if (!draggedNode) {
+      return;
+    }
+
+
+    draggedNode.element.removeEventListener(
+      "pointermove",
+      dragNode
+    );
+
+
+    draggedNode = null;
+
+    save();
+
+  }
+
+
+  /* ---------------------------------
+     NODE HOVER TOOLTIP
+  --------------------------------- */
+
+  function showTooltip(
+    node,
+    event
+  ) {
+
+    document.getElementById(
+      "tooltipTitle"
+    ).textContent =
+      node.title;
+
+
+    document.getElementById(
+      "tooltipDescription"
+    ).textContent =
+      node.description ||
+      "No description.";
+
+
+    document.getElementById(
+      "tooltipMeta"
+    ).textContent =
+      "Confidence: " +
+      node.confidence +
+      "%";
+
+
+    tooltip.style.display =
+      "block";
+
+
+    moveTooltip(event);
+
+  }
+
+
+  function moveTooltip(event) {
+
+    if (
+      tooltip.style.display ===
+      "none"
+    ) {
+      return;
+    }
+
+
+    const padding = 14;
+
+
+    let x =
+      event.clientX + 16;
+
+
+    let y =
+      event.clientY + 16;
+
+
+    const width =
+      tooltip.offsetWidth;
+
+
+    const height =
+      tooltip.offsetHeight;
+
+
+    if (
+      x + width >
+      window.innerWidth -
+      padding
+    ) {
+
+      x =
+        event.clientX -
+        width -
+        16;
+
+    }
+
+
+    if (
+      y + height >
+      window.innerHeight -
+      padding
+    ) {
+
+      y =
+        event.clientY -
+        height -
+        16;
+
+    }
+
+
+    tooltip.style.left =
+      Math.max(
+        padding,
+        x
+      ) + "px";
+
+
+    tooltip.style.top =
+      Math.max(
+        padding,
+        y
+      ) + "px";
+
+  }
+
+
+  function hideTooltip() {
+
+    tooltip.style.display =
+      "none";
+
+  }
+
+
+  /* ---------------------------------
+     EDIT NODE
+  --------------------------------- */
+
+  function openNodeEditor(id) {
+
+    const node =
+      getNode(id);
+
+
+    if (!node) {
+      return;
+    }
+
+
+    editingNodeID =
+      id;
+
+
+    document.getElementById(
+      "editTitle"
+    ).value =
+      node.title;
+
+
+    document.getElementById(
+      "editDescription"
+    ).value =
+      node.description;
+
+
+    document.getElementById(
+      "editConfidence"
+    ).value =
+      node.confidence;
+
+
+    document.getElementById(
+      "editConfidenceValue"
+    ).textContent =
+      node.confidence;
+
+
+    document.getElementById(
+      "nodeDialog"
+    ).showModal();
+
+  }
+
+
+  function saveNodeEdits() {
+
+    const node =
+      getNode(
+        editingNodeID
+      );
+
+
+    if (!node) {
+      return;
+    }
+
+
+    const newTitle =
+      document.getElementById(
+        "editTitle"
+      ).value.trim();
+
+
+    if (!newTitle) {
+
+      alert(
+        "A proposition needs a title."
+      );
+
+      return;
+
+    }
+
+
+    node.title =
+      newTitle;
+
+
+    node.description =
+      document.getElementById(
+        "editDescription"
+      ).value.trim();
+
+
+    node.confidence =
+      Number(
+        document.getElementById(
+          "editConfidence"
+        ).value
+      );
+
+
+    document.getElementById(
+      "nodeDialog"
+    ).close();
+
+
+    editingNodeID =
+      null;
+
+
+    save();
+
+    render();
+
+  }
+
+
+  function deleteNode() {
+
+    if (
+      !editingNodeID
+    ) {
+      return;
+    }
+
+
+    if (
+      !confirm(
+        "Delete this proposition and all connections attached to it?"
+      )
+    ) {
+      return;
+    }
+
+
+    state.nodes =
+      state.nodes.filter(
+        node =>
+          node.id !==
+          editingNodeID
+      );
+
+
+    state.edges =
+      state.edges.filter(
+        edge =>
+
+          edge.from !==
+          editingNodeID &&
+
+          edge.to !==
+          editingNodeID
+
+      );
+
+
+    document.getElementById(
+      "nodeDialog"
+    ).close();
+
+
+    editingNodeID =
+      null;
+
+
+    save();
+
+    render();
+
+  }
+
+
+  /* ---------------------------------
+     EDGE DETAILS
+  --------------------------------- */
+
+  function openEdgeDialog(id) {
+
+    const edge =
+      state.edges.find(
+        relationship =>
+          relationship.id === id
+      );
+
+
+    if (!edge) {
+      return;
+    }
+
+
+    editingEdgeID =
+      id;
+
+
+    const from =
+      getNode(
+        edge.from
+      );
+
+
+    const to =
+      getNode(
+        edge.to
+      );
+
+
+    document.getElementById(
+      "edgeDialogTitle"
+    ).textContent =
+
+      relationText[
+        edge.type
+      ] +
+
+      " · " +
+
+      edge.strength +
+
+      "%";
+
+
+    document.getElementById(
+      "edgeDialogDescription"
+    ).textContent =
+
+      (from ?
+        from.title :
+        "Unknown") +
+
+      " → " +
+
+      (to ?
+        to.title :
+        "Unknown") +
+
+      "\n\n" +
+
+      (
+        edge.description ||
+        "No relationship explanation."
+      );
+
+
+    document.getElementById(
+      "edgeDialog"
+    ).showModal();
+
+  }
+
+
+  function deleteEdge() {
+
+    if (
+      !editingEdgeID
+    ) {
+      return;
+    }
+
+
+    state.edges =
+      state.edges.filter(
+        edge =>
+          edge.id !==
+          editingEdgeID
+      );
+
+
+    editingEdgeID =
+      null;
+
+
+    document.getElementById(
+      "edgeDialog"
+    ).close();
+
+
+    save();
+
+    renderEdges();
+
+    updateStatus();
+
+  }
+
+
+  /* ---------------------------------
+     EXPORT / IMPORT
+  --------------------------------- */
+
+  function exportGraph() {
+
+    const data =
+      JSON.stringify(
+        state,
+        null,
+        2
+      );
+
+
+    const blob =
+      new Blob(
+        [data],
+        {
+          type:
+            "application/json"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.href =
+      url;
+
+
+    link.download =
+      "silo-graph.json";
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+      url
+    );
+
+  }
+
+
+  function importGraph(file) {
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function() {
+
+        try {
+
+          const data =
+            JSON.parse(
+              reader.result
+            );
+
+
+          if (
+            !Array.isArray(
+              data.nodes
+            ) ||
+
+            !Array.isArray(
+              data.edges
+            )
+          ) {
+
+            throw new Error(
+              "Invalid graph."
+            );
+
+          }
+
+
+          state.nodes =
+            data.nodes;
+
+
+          state.edges =
+            data.edges;
+
+
+          save();
+
+          render();
+
+        } catch (error) {
+
+          alert(
+            "That does not appear to be a valid Silo graph JSON file."
+          );
+
+        }
+
+      };
+
+
+    reader.readAsText(
+      file
+    );
+
+  }
+
+
+  /* ---------------------------------
+     CLEAR GRAPH
+  --------------------------------- */
+
+  function clearGraph() {
+
+    const answer =
+      confirm(
+        "Delete every proposition and connection? Export first if you want a backup."
+      );
+
+
+    if (!answer) {
+      return;
+    }
+
+
+    state.nodes = [];
+
+    state.edges = [];
+
+
+    save();
+
+    render();
+
+  }
+
+
+  /* ---------------------------------
+     EVENTS
+  --------------------------------- */
+
+  document.getElementById(
+    "addNodeButton"
+  ).addEventListener(
+    "click",
+    createNode
+  );
+
+
+  document.getElementById(
+    "nodeTitle"
+  ).addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key ===
+        "Enter"
+      ) {
+
+        createNode();
+
+      }
+
+    }
+  );
+
+
+  document.getElementById(
+    "nodeConfidence"
+  ).addEventListener(
+    "input",
+    event => {
+
+      document.getElementById(
+        "nodeConfidenceValue"
+      ).textContent =
+        event.target.value;
+
+    }
+  );
+
+
+  document.getElementById(
+    "addEdgeButton"
+  ).addEventListener(
+    "click",
+    createEdge
+  );
+
+
+  document.getElementById(
+    "editConfidence"
+  ).addEventListener(
+    "input",
+    event => {
+
+      document.getElementById(
+        "editConfidenceValue"
+      ).textContent =
+        event.target.value;
+
+    }
+  );
+
+
+  document.getElementById(
+    "saveNodeButton"
+  ).addEventListener(
+    "click",
+    saveNodeEdits
+  );
+
+
+  document.getElementById(
+    "cancelNodeButton"
+  ).addEventListener(
+    "click",
+    () => {
+
+      document.getElementById(
+        "nodeDialog"
+      ).close();
+
+    }
+  );
+
+
+  document.getElementById(
+    "deleteNodeButton"
+  ).addEventListener(
+    "click",
+    deleteNode
+  );
+
+
+  document.getElementById(
+    "closeEdgeButton"
+  ).addEventListener(
+    "click",
+    () => {
+
+      document.getElementById(
+        "edgeDialog"
+      ).close();
+
+    }
+  );
+
+
+  document.getElementById(
+    "deleteEdgeButton"
+  ).addEventListener(
+    "click",
+    deleteEdge
+  );
+
+
+  document.getElementById(
+    "exportButton"
+  ).addEventListener(
+    "click",
+    exportGraph
+  );
+
+
+  document.getElementById(
+    "importButton"
+  ).addEventListener(
+    "click",
+    () => {
+
+      document.getElementById(
+        "importFile"
+      ).click();
+
+    }
+  );
+
+
+  document.getElementById(
+    "importFile"
+  ).addEventListener(
+    "change",
+    event => {
+
+      const file =
+        event.target.files[0];
+
+
+      if (file) {
+
+        importGraph(
+          file
+        );
+
+      }
+
+
+      event.target.value =
+        "";
+
+    }
+  );
+
+
+  document.getElementById(
+    "resetButton"
+  ).addEventListener(
+    "click",
+    clearGraph
+  );
+
+
+  /* ---------------------------------
+     START
+  --------------------------------- */
+
+  render();
+
+</script>
+
 </body>
 </html>
